@@ -2,8 +2,8 @@ name: Go
 on: [push, pull_request]
 jobs:
 
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
 
