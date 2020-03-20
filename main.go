@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform/plugin"
+	"github.com/hashicorp/terraform-plugin-sdk/plugin"
 	"github.com/lancey-energy-storage/terraform-provider-influxdb-v2/influxdbv2"
 )
 
