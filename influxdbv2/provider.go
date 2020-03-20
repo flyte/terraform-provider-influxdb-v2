@@ -1,10 +1,8 @@
-package influxdb
+package influxdbv2
 
 import (
-	"fmt"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"net/url"
 )
 
 func Provider() terraform.ResourceProvider {
@@ -12,17 +10,14 @@ func Provider() terraform.ResourceProvider {
 		Schema: map[string]*schema.Schema{},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"influxdb": dataSourceInfluxdb(),
+			"influxdbv2_ready": dataSourceInfluxdbReady(),
 		},
 		ConfigureFunc: providerConfigure,
 	}
 }
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	url, err := url.Parse(d.Get("url").(string))
+	config := Config{}
 
-	if err != nil {
-		return nil, fmt.Errorf("invalid Influxdb URL: %s, %s", err, url)
-	}
-	return nil, nil
+	return config.Client()
 }
