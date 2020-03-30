@@ -33,5 +33,5 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error pinging server: %s", err)
 	}
-	return influx, nil
+	return nil, fmt.Errorf("invalid InfluxDBv2 URL: %s", error)
 }
