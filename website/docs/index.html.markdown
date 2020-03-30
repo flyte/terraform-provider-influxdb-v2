@@ -1,14 +1,14 @@
 ---
-layout: "influxdb"
-page_title: "Provider: InfluxDB"
-sidebar_current: "docs-influxdb-index"
+layout: "influxdbv2"
+page_title: "Provider: InfluxDB V2"
+sidebar_current: "docs-influxdbv2-index"
 description: |-
-  The InfluxDB provider configures databases, etc on an InfluxDB server.
+  The InfluxDB V2 provider configures databases, etc on an InfluxDB server.
 ---
 
 # InfluxDB V2 Provider
 
-The InfluxDB provider allows Terraform to create Databases in
+The InfluxDB V2 provider allows Terraform to create Databases in
 [InfluxDB](https://influxdb.com/). InfluxDB is a database server optimized
 for time-series data.
 
