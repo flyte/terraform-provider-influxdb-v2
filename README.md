@@ -31,3 +31,8 @@ provider "influxdbv2" {
  ```
 
 Find more examples in `examples/`.
+
+## Dev
+
+In case you need to update the influx client, run `go get github.com/lancey-energy-storage/influxdb-client-go@<commit sha>`.  
+Also don't forget to run `go mod tidy` from time to time to remove useless dependencies.

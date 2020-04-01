@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/influxdata/influxdb-client-go"
+	"github.com/lancey-energy-storage/influxdb-client-go"
 )
 
 func Provider() terraform.ResourceProvider {
