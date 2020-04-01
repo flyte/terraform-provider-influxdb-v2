@@ -1,2 +1,7 @@
 # Build output
 terraform-provider-influxdb-v2
+terraform-provider-influxdbv2
+
+# Example
+examples/.terraform/
+examples/terraform.tfstate

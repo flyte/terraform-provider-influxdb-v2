@@ -13,8 +13,10 @@ The provider configuration block accepts the following arguments:
 ## Build
 
 ```bash
-go build
+go build -o terraform-provider-influxdbv2
 ```
+
+Don't forget to copy `terraform-provider-influxdbv2` to your terraform plugin directory (eg. `~/.terraform.d/plugins/linux_amd64` on linux).
 
 ## Test
 
