@@ -10,11 +10,24 @@ The provider configuration block accepts the following arguments:
     * The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable.
     * Defaults to `http://localhost:9999/`.
 
-## Example Usage
+## Build
+
+```bash
+go build
+```
+
+## Test
+
+```bash
+go test ./influxdbv2
+```
+
+## How to use
 
 ```hcl
 provider "influxdbv2" {
   url = "http://influxdb.example.com:9999"
 }
  ```
- 
+
+Find more examples in `examples/`.
