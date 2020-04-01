@@ -32,7 +32,11 @@ provider "influxdbv2" {
 }
  ```
 
-Find more examples in `examples/`.
+Find more examples in `examples/`. To run them:
+```bash
+terraform init
+terraform apply
+```
 
 ## Dev
 

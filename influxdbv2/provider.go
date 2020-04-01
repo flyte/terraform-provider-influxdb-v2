@@ -16,7 +16,7 @@ func Provider() terraform.ResourceProvider {
 				Type:     schema.TypeString,
 				Optional: true,
 				DefaultFunc: schema.EnvDefaultFunc(
-					"INFLUXDB_URL", "http://localhost:9999/"),
+					"INFLUXDB_V2_URL", "http://localhost:9999/"),
 			},
 		},
 		ConfigureFunc: providerConfigure,
@@ -26,12 +26,13 @@ func Provider() terraform.ResourceProvider {
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	influx, error := influxdb.New(d.Get("url").(string), "")
 	if error != nil {
-		panic(error)
+		return nil, fmt.Errorf("invalid InfluxDBv2 URL: %s", error)
 	}
 
 	err := influx.Ping(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("error pinging server: %s", err)
 	}
-	return nil, fmt.Errorf("invalid InfluxDBv2 URL: %s", error)
+	
+	return influx, nil
 }
