@@ -10,7 +10,9 @@ import (
 
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
-
+		DataSourcesMap: map[string]*schema.Resource{
+			"influxdbv2_ready": dataReady(),
+		},
 		Schema: map[string]*schema.Schema{
 			"url": {
 				Type:     schema.TypeString,
@@ -33,6 +35,6 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error pinging server: %s", err)
 	}
-	
+
 	return influx, nil
 }
