@@ -13,10 +13,26 @@ func Provider() terraform.ResourceProvider {
 
 		Schema: map[string]*schema.Schema{
 			"url": {
-				Type:     schema.TypeString,
-				Optional: true,
-				DefaultFunc: schema.EnvDefaultFunc(
-					"INFLUXDB_V2_URL", "http://localhost:9999/"),
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_URL", "http://127.0.0.1:9999"),
+			},
+			"username": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_USERNAME", ""),
+			},
+			"password": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_PASSWORD", ""),
+			},
+			"token": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_TOKEN", ""),
 			},
 		},
 		ConfigureFunc: providerConfigure,
@@ -24,7 +40,8 @@ func Provider() terraform.ResourceProvider {
 }
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	influx, error := influxdb.New(d.Get("url").(string), "")
+	options := influxdb.WithUserAndPass(d.Get("username").(string), d.Get("password").(string))
+	influx, error := influxdb.New(d.Get("url").(string), d.Get("token").(string), options)
 	if error != nil {
 		return nil, fmt.Errorf("invalid InfluxDBv2 URL: %s", error)
 	}
@@ -33,6 +50,6 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error pinging server: %s", err)
 	}
-	
+
 	return influx, nil
 }
