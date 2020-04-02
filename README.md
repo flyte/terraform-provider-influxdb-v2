@@ -26,11 +26,20 @@ go test ./influxdbv2
 
 ## How to use
 
+### Initialize the provider
 ```hcl
 provider "influxdbv2" {
   url = "http://influxdb.example.com:9999"
+  username = "influxdbUsername"
+  password = "influxdbPassword"
+  token = "influxdbToken"
 }
+
  ```
+
+### Get /ready informations
+
+Please refer to the documentation [here](website/docs/r/ready.html.md)
 
 Find more examples in `examples/`. To run them:
 ```bash
