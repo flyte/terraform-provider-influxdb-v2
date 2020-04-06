@@ -5,16 +5,10 @@ provider "influxdbv2" {
     token = "influxdbToken"
 }
 
-data "influxdbv2_ready" "test" {}
-
-output "ready_status"  {
-    value = data.influxdbv2_ready.test.output["status"]
+data "influxdbv2_getbucketsinsource" "test"{
+    id = "020f755c3c082000"
 }
 
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
+output "links_self" {
+    value = data.influxdbv2_getbucketsinsource.test.output["Links"].Self
 }
