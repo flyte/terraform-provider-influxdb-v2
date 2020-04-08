@@ -34,27 +34,11 @@ provider "influxdbv2" {
   password = "influxdbPassword"
   token = "influxdbToken"
 }
-
  ```
 
-### Get /ready informations
+###Available functionalities
 
-```hcl
-data "influxdbv2_ready" "test" {}
-
-output "influxdbv2_ready" {
-   value = data.influxdbv2_ready.test.output["status"]
-}
-
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
-}
-
-```
+* **ready** status of the influxdbv2, documentation [here](website/docs/r/ready.html.md)
 
 Find more examples in `examples/`. To run them:
 ```bash
