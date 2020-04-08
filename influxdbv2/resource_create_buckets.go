@@ -36,7 +36,7 @@ func ResourceBucket() *schema.Resource {
 						},
 						"type": {
 							Type:     schema.TypeString,
-							Required: false,
+							Optional: true,
 							Default:  "expire",
 						},
 					},
