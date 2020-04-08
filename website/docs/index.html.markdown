@@ -31,10 +31,3 @@ provider "influxdbv2" {
   token = "influxdbToken"
 }
  ```
- ### Ready functionality
- 
- Go in section [ready](r/ready.html.md) to see example of usage.
- 
- ### Bucket functionnality
- 
- Go in section [bucket](r/bucket.html.md) to see example of usage.
