@@ -18,10 +18,9 @@ func Provider() terraform.ResourceProvider {
 		},
 		Schema: map[string]*schema.Schema{
 			"url": {
-				Type:     schema.TypeString,
-				Optional: true,
-				DefaultFunc: schema.EnvDefaultFunc(
-					"INFLUXDB_V2_URL", "http://localhost:9999/"),
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_URL", "http://localhost:9999"),
 			},
 			"username": {
 				Type:        schema.TypeString,
@@ -35,9 +34,9 @@ func Provider() terraform.ResourceProvider {
 				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_PASSWORD", ""),
 			},
 			"token": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Sensitive:   true,
+				Type: schema.TypeString,
+				Optional: true,
+				Sensitive:true,
 				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_TOKEN", ""),
 			},
 		},
