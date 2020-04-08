@@ -16,7 +16,7 @@ The provider configuration block accepts the following arguments:
 * ``url``
     * (Optional) 
     * The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable.
-    * Defaults to `http://127.0.0.1:9999/`.
+    * Defaults to `http://localhost:9999/`.
 
 * ``username``
    * (Optional)
@@ -39,4 +39,6 @@ provider "influxdbv2" {
   token = "influxdbToken"
 }
  ```
+ ### Ready functionality
  
+ Go in section [ready](r/ready.html.md) to see example of usage.
