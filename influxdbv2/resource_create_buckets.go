@@ -1,21 +1,20 @@
 package influxdbv2
 
 import (
-	"errors"
+	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/lancey-energy-storage/influxdb-client-go"
 )
 
-func resourceCreateBucket() *schema.Resource {
+func ResourceBucket() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceCreateBucketCreate,
-		Delete: resourceCreateBucketDelete,
-		Read:   resourceCreateBucketRead,
-		Update: resourceCreateBucketUpdate,
+		Create: resourceBucketCreate,
+		Delete: resourceBucketDelete,
+		Read:   resourceBucketRead,
+		Update: resourceBucketUpdate,
 		Schema: map[string]*schema.Schema{
 			"description": {
 				Type:     schema.TypeString,
-				Required: false,
 				Optional: true,
 			},
 			"name": {
@@ -24,7 +23,6 @@ func resourceCreateBucket() *schema.Resource {
 			},
 			"org_id": {
 				Type:     schema.TypeString,
-				Required: false,
 				Optional: true,
 			},
 			"retention_rules": {
@@ -45,14 +43,13 @@ func resourceCreateBucket() *schema.Resource {
 			},
 			"rp": {
 				Type:     schema.TypeString,
-				Required: false,
 				Optional: true,
 			},
 		},
 	}
 }
 
-func resourceCreateBucketCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(*influxdb.Client)
 
 	if d.Get("name") == "" {
