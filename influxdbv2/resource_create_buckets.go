@@ -94,6 +94,12 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error getting bucket: %v", err)
 	}
+	d.Set("name", result.Name)
+	d.Set("description", result.Description)
+	d.Set("org_id", result.OrgID)
+	d.Set("rr_every_seconds", result.RetentionRules[0].EverySeconds)
+	d.Set("rr_type", result.RetentionRules[0].Type)
+
 	d.Set("type", result.Type)
 	d.Set("created_at", result.CreatedAt)
 	d.Set("updated_at", result.UpdatedAt)
