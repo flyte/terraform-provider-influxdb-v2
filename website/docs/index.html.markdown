@@ -13,22 +13,13 @@ The InfluxDB V2 provider allows Terraform to manage
 
 The provider configuration block accepts the following arguments:
 
-* ``url``
-    * (Optional) 
-    * The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable.
-    * Defaults to `http://localhost:9999/`.
+* ``url`` (Optional) The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable. Defaults to `http://localhost:9999/`.
 
-* ``username``
-   * (Optional)
-   * The username of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_USERNAME` environment variable.
+* ``username`` (Optional) The username of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_USERNAME` environment variable.
 
-* ``password``
-   * (Optional)
-   * The password of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_PASSWORD` environment variable.
+* ``password`` (Optional) The password of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_PASSWORD` environment variable.
 
-* ``token``
-   * (Optional)
-   * The token of the Influwdb V2 account. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
+* ``token`` (Optional) The token of the Influwdb V2 account. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
 ## Example Usage
 
 ```hcl
@@ -42,3 +33,7 @@ provider "influxdbv2" {
  ### Ready functionality
  
  Go in section [ready](r/ready.html.md) to see example of usage.
+ 
+ ### Bucket functionnality
+ 
+ Go in section [bucket](r/bucket.html.md) to see example of usage.
