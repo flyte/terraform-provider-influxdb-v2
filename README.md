@@ -39,7 +39,22 @@ provider "influxdbv2" {
 
 ### Get /ready informations
 
-Please refer to the documentation [here](website/docs/r/ready.html.md)
+```hcl
+data "influxdbv2_ready" "test" {}
+
+output "influxdbv2_ready" {
+   value = data.influxdbv2_ready.test.output["status"]
+}
+
+output "ready_started"  {
+    value = data.influxdbv2_ready.test.output["started"]
+}
+
+output "ready_up"  {
+    value = data.influxdbv2_ready.test.output["up"]
+}
+
+```
 
 Find more examples in `examples/`. To run them:
 ```bash
