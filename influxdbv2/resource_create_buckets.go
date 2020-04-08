@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/lancey-energy-storage/influxdb-client-go"
-	"github.com/rs/xid"
 )
 
 func resourceCreateBucket() *schema.Resource {
@@ -54,6 +53,8 @@ func resourceCreateBucket() *schema.Resource {
 }
 
 func resourceCreateBucketCreate(d *schema.ResourceData, meta interface{}) error {
+	influx := meta.(*influxdb.Client)
+
 	if d.Get("name") == "" {
 		return errors.New("a name is required")
 	}
@@ -63,17 +64,26 @@ func resourceCreateBucketCreate(d *schema.ResourceData, meta interface{}) error 
 	if err != nil {
 		return err
 	}
-	influx := meta.(*influxdb.Client)
-	_, err = influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
+
+	result, err := influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
 	if err != nil {
 		return err
 	}
-	id := xid.New().String()
-	d.SetId(id)
+
+	bucketCreated := &influxdb.BucketCreate{}
+	bucketCreated = result
+	d.SetId(bucketCreated.Id)
+
 	return nil
 }
 
 func resourceCreateBucketDelete(d *schema.ResourceData, meta interface{}) error {
+	influx := meta.(*influxdb.Client)
+	err := influx.DeleteABucket(d.Id())
+	if err != nil {
+		return err
+	}
+	d.SetId("")
 	return nil
 }
 
@@ -82,5 +92,26 @@ func resourceCreateBucketRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceCreateBucketUpdate(d *schema.ResourceData, meta interface{}) error {
+	influx := meta.(*influxdb.Client)
+
+	if d.Get("name") == "" {
+		return errors.New("a name is required")
+	}
+
+	retentionRules, err := SetRetentionRules(d.Get("retention_rules"))
+	if err != nil {
+		return err
+	}
+
+	labels, err := SetLabels(d.Get("labels"))
+	if err != nil {
+		return err
+	}
+
+	_, err = influx.UpdateABucket(d.Id(), d.Get("description").(string), labels, d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

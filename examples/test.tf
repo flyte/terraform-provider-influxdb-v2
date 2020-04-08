@@ -1,14 +1,31 @@
 provider "influxdbv2" {
-    url = "http://influxdbv2.example.com:9999"
+    url = "http://localhost:9999"
     username = "influxdbUsername"
     password = "influxdbPassword"
-    token = "influxdbToken"
+    token = "GaQKTvPvBvdJKux3gyHyH3O0zmQQ3IEZuEQ1SSgREOi54mdhUsNaW3h6wGs-tTmLytHqjz80EJB8bBRKUPCKqg=="
 }
 
-data "influxdbv2_getbucketsinsource" "test"{
-    id = "020f755c3c082000"
+data "influxdbv2_ready" "test" {}
+
+output "influxdbv2_ready" {
+    value = data.influxdbv2_ready.test.output["status"]
 }
 
-output "links_self" {
-    value = data.influxdbv2_getbucketsinsource.test.output["Links"].Self
+output "ready_started"  {
+    value = data.influxdbv2_ready.test.output["started"]
+}
+
+output "ready_up"  {
+    value = data.influxdbv2_ready.test.output["up"]
+}
+
+resource "influxdbv2_createbucket" "initial" {
+    description = ""
+    name = "le bucket de test terraform"
+    org_id = "94d518926178fea7"
+    retention_rules {
+        every_seconds = 45
+        type = "expire"
+    }
+    rp = ""
 }
