@@ -9,7 +9,7 @@ description: |-
 # InfluxDB V2 Provider
 
 The InfluxDB V2 provider allows Terraform to manage
-[InfluxDB v2](https://www.influxdata.com/products/influxdb-overview/).
+[InfluxDB v2](https://v2.docs.influxdata.com/v2.0/get-started/).
 
 The provider configuration block accepts the following arguments:
 
@@ -17,7 +17,7 @@ The provider configuration block accepts the following arguments:
     * (Optional) 
     * The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable.
     * Defaults to `http://localhost:9999/`.
-
+    
 * ``username``
    * (Optional)
    * The username of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_USERNAME` environment variable.

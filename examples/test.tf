@@ -4,17 +4,3 @@ provider "influxdbv2" {
     password = "influxdbPassword"
     token = "influxdbToken"
 }
-
-data "influxdbv2_ready" "test" {}
-
-output "ready_status"  {
-    value = data.influxdbv2_ready.test.output["status"]
-}
-
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
-}
