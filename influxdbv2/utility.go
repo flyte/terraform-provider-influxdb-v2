@@ -3,7 +3,6 @@ package influxdbv2
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/lancey-energy-storage/influxdb-client-go"
-	"log"
 )
 
 func SetRetentionRules(input interface{}) ([]influxdb.RetentionRules, error) {

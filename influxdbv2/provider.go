@@ -11,8 +11,7 @@ import (
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"influxdbv2_ready":              dataReady(),
-			"influxdbv2_getbucketsinsource": getBucketsInSource(),
+			"influxdbv2_ready": dataReady(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"influxdbv2_createbucket": resourceCreateBucket(),
