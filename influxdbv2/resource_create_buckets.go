@@ -80,11 +80,7 @@ func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	bucketCreated := &influxdb.BucketCreate{}
-	bucketCreated = result
-	d.SetId(bucketCreated.Id)
-
-	return nil
+	return resourceBucketRead(d, meta)
 }
 
 func resourceCreateBucketDelete(d *schema.ResourceData, meta interface{}) error {
@@ -97,7 +93,17 @@ func resourceCreateBucketDelete(d *schema.ResourceData, meta interface{}) error 
 	return nil
 }
 
-func resourceCreateBucketRead(d *schema.ResourceData, meta interface{}) error {
+func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
+	influx := meta.(*influxdb.Client)
+	result, err := influx.GetBucketByID(d.Id())
+	if err != nil {
+		return fmt.Errorf("error getting bucket: %v", err)
+	}
+	d.Set("type", result.Type)
+	d.Set("created_at", result.CreatedAt)
+	d.Set("updated_at", result.UpdatedAt)
+
+	d.SetId(result.Id)
 	return nil
 }
 
