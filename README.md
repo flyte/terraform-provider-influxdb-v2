@@ -29,6 +29,9 @@ go test ./influxdbv2
 ```hcl
 provider "influxdbv2" {
   url = "http://influxdb.example.com:9999"
+  username = "influxdbUsername"
+  password = "influxdbPassword"
+  token = "influxdbToken"
 }
  ```
 
