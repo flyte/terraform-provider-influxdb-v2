@@ -36,7 +36,8 @@ func ResourceBucket() *schema.Resource {
 						},
 						"type": {
 							Type:     schema.TypeString,
-							Required: true,
+							Required: false,
+							Default:  "expire",
 						},
 					},
 				},
@@ -44,6 +45,18 @@ func ResourceBucket() *schema.Resource {
 			"rp": {
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"type": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"created_at": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"updated_at": {
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 		},
 	}
