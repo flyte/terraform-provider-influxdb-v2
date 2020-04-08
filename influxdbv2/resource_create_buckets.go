@@ -70,11 +70,12 @@ func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error getting retention rules: %v", err)
 	}
 
-	_, err = influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
+	result, err := influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
 	if err != nil {
 		return fmt.Errorf("error creating bucket: %v", err)
 	}
 
+	d.SetId(result.Id)
 	return resourceBucketRead(d, meta)
 }
 
@@ -104,7 +105,6 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("created_at", result.CreatedAt)
 	d.Set("updated_at", result.UpdatedAt)
 
-	d.SetId(result.Id)
 	return nil
 }
 
