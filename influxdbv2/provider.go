@@ -10,12 +10,31 @@ import (
 
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
-
+		DataSourcesMap: map[string]*schema.Resource{
+			"influxdbv2_ready": DataReady(),
+		},
 		Schema: map[string]*schema.Schema{
 			"url": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_URL", "http://localhost:9999"),
+			},
+			"username": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_USERNAME", ""),
+			},
+			"password": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_PASSWORD", ""),
+			},
+			"token": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Sensitive:   true,
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_TOKEN", ""),
 			},
 			"username": {
 				Type:        schema.TypeString,
