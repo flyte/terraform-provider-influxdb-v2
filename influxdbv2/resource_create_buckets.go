@@ -64,30 +64,25 @@ func ResourceBucket() *schema.Resource {
 
 func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(*influxdb.Client)
-
-	if d.Get("name") == "" {
-		return errors.New("a name is required")
-	}
-
 	rr := d.Get("retention_rules")
-	retentionRules, err := SetRetentionRules(rr)
+	retentionRules, err := getRetentionRules(rr)
 	if err != nil {
-		return err
+		return fmt.Errorf("error getting retention rules: %v", err)
 	}
 
-	result, err := influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
+	_, err = influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
 	if err != nil {
-		return err
+		return fmt.Errorf("error creating bucket: %v", err)
 	}
 
 	return resourceBucketRead(d, meta)
 }
 
-func resourceCreateBucketDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceBucketDelete(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(*influxdb.Client)
 	err := influx.DeleteABucket(d.Id())
 	if err != nil {
-		return err
+		return fmt.Errorf("error deleting bucket: %v", err)
 	}
 	d.SetId("")
 	return nil
@@ -107,27 +102,33 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-func resourceCreateBucketUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceBucketUpdate(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(*influxdb.Client)
 
-	if d.Get("name") == "" {
-		return errors.New("a name is required")
+	retentionRules, err := getRetentionRules(d.Get("retention_rules"))
+	if err != nil {
+		return fmt.Errorf("error getting retention rules: %v", err)
 	}
 
-	retentionRules, err := SetRetentionRules(d.Get("retention_rules"))
-	if err != nil {
-		return err
-	}
-
-	labels, err := SetLabels(d.Get("labels"))
-	if err != nil {
-		return err
-	}
+	labels := []influxdb.Labels{}
 
 	_, err = influx.UpdateABucket(d.Id(), d.Get("description").(string), labels, d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
 	if err != nil {
-		return err
+		return fmt.Errorf("error updating bucket: %v", err)
 	}
 
 	return nil
+}
+
+func getRetentionRules(input interface{}) ([]influxdb.RetentionRules, error) {
+	result := []influxdb.RetentionRules{}
+	retentionRulesSet := input.(*schema.Set).List()
+	for _, retentionRule := range retentionRulesSet {
+		rr, ok := retentionRule.(map[string]interface{})
+		if ok {
+			each := influxdb.RetentionRules{Type: rr["type"].(string), EverySeconds: rr["every_seconds"].(int)}
+			result = append(result, each)
+		}
+	}
+	return result, nil
 }
