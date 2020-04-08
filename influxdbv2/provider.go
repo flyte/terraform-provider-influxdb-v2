@@ -34,7 +34,7 @@ func Provider() terraform.ResourceProvider {
 				Type: schema.TypeString,
 				Optional: true,
 				Sensitive:true,
-				DEfaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_TOKEN, ""),
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_TOKEN", ""),
 			},
 		},
 		ConfigureFunc: providerConfigure,
