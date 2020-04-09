@@ -39,3 +39,6 @@ output "updated_at" {
 output "type" {
     value = influxdbv2_bucket.initial.type
 }
+output "retention_rules" {
+    value = influxdbv2_bucket.initial.retention_rules
+}

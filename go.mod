@@ -5,6 +5,6 @@ go 1.14
 require (
 	github.com/hashicorp/terraform-plugin-sdk v1.8.0
 	github.com/influxdata/influxdb-client-go v0.1.5 // indirect
-	github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200408112735-61daa9269ef4
+	github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200409084747-6140908b2b3e
 	github.com/rs/xid v1.2.1
 )

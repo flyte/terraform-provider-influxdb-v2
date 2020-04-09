@@ -8,7 +8,7 @@ description: |-
 
 ## Example Usage
 
-###Create a new bucket
+### Create a new bucket
 ```hcl
 resource "influxdbv2_bucket" "initial" {
     name = "New Bucket"
@@ -22,7 +22,7 @@ resource "influxdbv2_bucket" "initial" {
 }
 ```
 
-###Output usage
+### Output usage
 ```hcl
 output "created_at" {
     value = influxdbv2_bucket.initial.created_at
@@ -33,9 +33,24 @@ output "updated_at" {
 output "type" {
     value = influxdbv2_bucket.initial.type
 }
+output "retention_rules" {
+    value = influxdbv2_bucket.initial.retention_rules
+}
+output "rp" {
+    value = influxdbv2_bucket.initial.rp
+}
+output "org_id" {
+    value = influxdbv2_bucket.initial.org_id
+}
+output "name" {
+    value = influxdbv2_bucket.initial.name
+}
+output "description" {
+    value = influxdbv2_bucket.initial.description
+}
 ```
 
-##Argument Reference
+## Argument Reference
 
 The following arguments are supported: 
 
@@ -43,13 +58,13 @@ The following arguments are supported:
 
 * ``description`` (Optional) The description of the bucket.
 
-* ``org_id`` (Optional) The organization id the bucket is linked.
+* ``org_id`` (Required) The organization id the bucket is linked.
 
 * ``retention_rules`` (Required) Retention rules that affects the bucket.
     * ``every_seconds`` (Required) How many seconds the rule should be applied.
     * ``type`` (Optional) The type of the retention. Default is "expire".
 
-##Attributes Reference
+## Attributes Reference
 
 In addition to the above arguments, the following attributes are exported:
 
