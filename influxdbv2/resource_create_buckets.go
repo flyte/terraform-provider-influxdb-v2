@@ -27,7 +27,7 @@ func ResourceBucket() *schema.Resource {
 			},
 			"retention_rules": {
 				Type:     schema.TypeSet,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"every_seconds": {

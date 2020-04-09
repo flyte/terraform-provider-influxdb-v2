@@ -11,8 +11,8 @@ description: |-
 ###Create a new bucket
 ```hcl
 resource "influxdbv2_bucket" "initial" {
-    name = "Le nouveau bucket"
-    description = "La description du bucket"
+    name = "New Bucket"
+    description = "Description of new bucket"
     org_id = "94d518926178fea7"
     retention_rules {
         every_seconds = 45
@@ -45,7 +45,7 @@ The following arguments are supported:
 
 * ``org_id`` (Optional) The organization id the bucket is linked.
 
-* ``retention_rules`` (Optional) Retention rules that affects the bucket.
+* ``retention_rules`` (Required) Retention rules that affects the bucket.
     * ``every_seconds`` (Required) How many seconds the rule should be applied.
     * ``type`` (Optional) The type of the retention. Default is "expire".
 
