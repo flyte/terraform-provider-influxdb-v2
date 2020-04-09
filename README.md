@@ -34,13 +34,14 @@ provider "influxdbv2" {
   password = "influxdbPassword"
   token = "influxdbToken"
 }
-
  ```
 
 ###Available functionalities
 
 * **ready** status of the influxdbv2, documentation [here](website/docs/r/ready.html.md)
+
 * **bucket** to create, update and delete bucket resources, documentation [here](website/docs/r/bucket.html.md)
+
 
 ###Examples file
 Find more examples in `examples/`. To run them:
