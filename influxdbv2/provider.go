@@ -19,21 +19,10 @@ func Provider() terraform.ResourceProvider {
 				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_URL", "http://localhost:9999"),
 			},
-			"username": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_USERNAME", ""),
-			},
-			"password": {
+			"token": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Sensitive:   true,
-				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_PASSWORD", ""),
-			},
-			"token": {
-				Type: schema.TypeString,
-				Optional: true,
-				Sensitive:true,
 				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_TOKEN", ""),
 			},
 		},
@@ -42,8 +31,7 @@ func Provider() terraform.ResourceProvider {
 }
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	options := influxdb.WithUserAndPass(d.Get("username").(string), d.Get("password").(string))
-	influx, error := influxdb.New(d.Get("url").(string), d.Get("token").(string), options)
+	influx, error := influxdb.New(d.Get("url").(string), d.Get("token").(string))
 	if error != nil {
 		return nil, fmt.Errorf("invalid InfluxDBv2 URL: %s", error)
 	}
