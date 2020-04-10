@@ -18,14 +18,6 @@ The provider configuration block accepts the following arguments:
     * The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable.
     * Defaults to `http://localhost:9999/`.
     
-* ``username``
-   * (Optional)
-   * The username of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_USERNAME` environment variable.
-
-* ``password``
-   * (Optional)
-   * The password of the Influxdb V2 account. May alternatively be set via the `INFLUXDB_V2_PASSWORD` environment variable.
-
 * ``token``
    * (Optional)
    * The token of the Influwdb V2 account. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
@@ -34,8 +26,6 @@ The provider configuration block accepts the following arguments:
 ```hcl
 provider "influxdbv2" {
   url = "http://influxdb.example.com:9999"
-  username = "influxdbUsername"
-  password = "influxdbPassword"
   token = "influxdbToken"
 }
  ```

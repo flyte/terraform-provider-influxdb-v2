@@ -27,15 +27,16 @@ go test ./influxdbv2
 ## How to use
 
 ### Initialize the provider
+
+If you already setup the initial onboarding screen, it is necessary to get the access token and set it up like below.
 ```hcl
 provider "influxdbv2" {
   url = "http://influxdb.example.com:9999"
-  username = "influxdbUsername"
-  password = "influxdbPassword"
   token = "influxdbToken"
 }
+```
 
- ```
+If you need to setup the onboarding screen, you should use the provider created for that. To use it, see the documentation [here](https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2-onboarding)
 
 ### Get /ready informations
 
