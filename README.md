@@ -5,10 +5,9 @@ The InfluxDB V2 provider allows Terraform to manage
 
 The provider configuration block accepts the following arguments:
 
-* ``url``
-    * (Optional) 
-    * The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable.
-    * Defaults to `http://localhost:9999/`.
+* ``url`` (Optional) The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable. Defaults to `http://localhost:9999/`.
+
+* ``token`` (Optional) The token that gives access to the influxdb instance. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
 
 ## Build
 
@@ -38,24 +37,9 @@ provider "influxdbv2" {
 
 If you need to setup the onboarding screen, you should use the provider created for that. To use it, see the documentation [here](https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2-onboarding)
 
-### Get /ready informations
+### Available functionalities
 
-```hcl
-data "influxdbv2_ready" "test" {}
-
-output "influxdbv2_ready" {
-   value = data.influxdbv2_ready.test.output["status"]
-}
-
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
-}
-
-```
+* **ready** status of the influxdbv2, documentation [here](website/docs/r/ready.html.md)
 
 Find more examples in `examples/`. To run them:
 ```bash
