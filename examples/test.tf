@@ -2,7 +2,7 @@ provider "influxdbv2" {
     url = "http://localhost:9999"
     username = "influxdbUsername"
     password = "influxdbPassword"
-    token = "GaQKTvPvBvdJKux3gyHyH3O0zmQQ3IEZuEQ1SSgREOi54mdhUsNaW3h6wGs-tTmLytHqjz80EJB8bBRKUPCKqg=="
+    token = "SaQ3En2d6aWQxLlQZWcyDk5zPA-rZUPcYj-VUsLillGRifxDxB2tjDty_KPU7UopWvuwz_GUyFDiH674rp53xw=="
 }
 
 data "influxdbv2_ready" "test" {}
@@ -22,7 +22,7 @@ output "ready_up"  {
 resource "influxdbv2_bucket" "initial" {
     description = ""
     name = "le bucket de test terraform"
-    org_id = "94d518926178fea7"
+    org_id = "1de630828fbc3210"
     retention_rules {
         every_seconds = 45
         type = "expire"
@@ -41,4 +41,7 @@ output "type" {
 }
 output "retention_rules" {
     value = influxdbv2_bucket.initial.retention_rules
+}
+output "rp" {
+    value = influxdbv2_bucket.initial.rp
 }

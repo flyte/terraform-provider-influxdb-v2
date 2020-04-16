@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/lancey-energy-storage/influxdb-client-go"
-	"strconv"
 )
 
 func ResourceBucket() *schema.Resource {
@@ -100,8 +99,7 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("description", result.Description)
 	d.Set("org_id", result.OrgID)
 	d.Set("retention_rules", result.RetentionRules)
-	d.Set("retention_rules.every_seconds", strconv.Itoa(result.RetentionRules[0].EverySeconds))
-	d.Set("retention_rules.type", result.RetentionRules[0].Type)
+	d.Set("rp", result.Rp)
 
 	d.Set("type", result.Type)
 	d.Set("created_at", result.CreatedAt)
