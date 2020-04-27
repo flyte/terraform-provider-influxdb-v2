@@ -160,8 +160,6 @@ github.com/imdario/mergo v0.3.6/go.mod h1:2EnlNZ0deacrJVfApfmtdGgDfMuh/nq6Ok1EcJ
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/influxdata/flux v0.0.0-20190620184636-886e3c28388d h1:U8iWfsBHYJwqUiEuL4+506I/1zU0vZEt78xhqTGFSpU=
 github.com/influxdata/flux v0.0.0-20190620184636-886e3c28388d/go.mod h1:jvMlODMVoTjT8XESgISlGk1ldX0ME7mWcNGZ4Ssw3uw=
-github.com/influxdata/influxdb-client-go v0.1.5 h1:xDXv+MeaAsagGC47AXSYScA3YskWNgBKsE4hlCjgwew=
-github.com/influxdata/influxdb-client-go v0.1.5/go.mod h1:xJLh/tn0HsGzauZKamoZceTqNNlm45EQqd83ZKmPheI=
 github.com/influxdata/line-protocol v0.0.0-20180522152040-32c6aa80de5e/go.mod h1:4kt73NQhadE3daL3WhR5EJ/J2ocX0PZzwxQ0gXJ7oFE=
 github.com/influxdata/line-protocol v0.0.0-20190509173118-5712a8124a9a h1:p2OJKXyrNEo7OefeU+JNp1dpCOZJ8AOpJScpNK/MGDI=
 github.com/influxdata/line-protocol v0.0.0-20190509173118-5712a8124a9a/go.mod h1:4kt73NQhadE3daL3WhR5EJ/J2ocX0PZzwxQ0gXJ7oFE=
@@ -184,8 +182,6 @@ github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/kylelemons/godebug v0.0.0-20170820004349-d65d576e9348/go.mod h1:B69LEHPfb2qLo0BaaOLcbitczOKLWTsrBG9LczfCD4k=
 github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0SNc=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
-github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200401110235-8fbe2f2a8d03 h1:l4jRL/RZUTGXSmIisTWsqJcpkcofvlFFU5YOMFOJufY=
-github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200401110235-8fbe2f2a8d03/go.mod h1:cChmsSZDvYf8io/oa4m2ZIxEucr/K+a9MTNqJ6R8mSo=
 github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200410160148-dc950e99699c h1:CSF1uva3KweiX0qUIsoCAnh1nFEenDAWxK1tLMzRr40=
 github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200410160148-dc950e99699c/go.mod h1:MmKmWS52s8PrHyZlpg4qkrOQMUDN7moYPu7t6Q/az30=
 github.com/lib/pq v1.0.0 h1:X5PMW56eZitiTeO7tKzZxFCSpbFZJtkMMooicw2us9A=
