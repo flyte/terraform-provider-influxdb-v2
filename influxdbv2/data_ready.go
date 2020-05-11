@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/lancey-energy-storage/influxdb-client-go"
-	"github.com/rs/xid"
 	"log"
 )
 
@@ -39,7 +38,12 @@ func DataGetReady(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	d.Set("output", output)
-	id := xid.New().String()
+	url, err := influx.GetUrl()
+	id := ""
+	if err != nil {
+		id = ""
+	}
+	id = url
 	d.SetId(id)
 
 	return nil
