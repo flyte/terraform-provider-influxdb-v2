@@ -1,0 +1,42 @@
+on:
+  release:
+    types:
+      - created
+    tags:
+      - 'v*'
+
+name: Create Release
+
+jobs:
+  releases:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # build and publish in parallel: linux/amd64, windows/amd64, darwin/amd64
+        goos: [linux, windows, darwin]
+        goarch: [amd64]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set APP_VERSION env
+        run: echo ::set-env name=APP_VERSION::$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev )
+
+      - name: Set RELEASE_VERSION
+        id: get_version
+        run: echo ::set-output name=RELEASE_VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Set BUILD_TIME env
+        run: echo ::set-env name=BUILD_TIME::$(date)
+
+      - name: Environment Printer
+        uses: managedkaos/print-env@v1.0
+
+      - uses: wangyoucao577/go-release-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          goversion: "1.14"
+          project_path: "./"
+          binary_name: "influxdbv2_${{ steps.get_version.outputs.RELEASE_VERSION }}"
