@@ -21,6 +21,7 @@ The provider configuration block accepts the following arguments:
 * ``token``
    * (Optional)
    * The token of the Influwdb V2 account. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
+   
 ## Example Usage
 
 ```hcl

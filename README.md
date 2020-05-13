@@ -41,6 +41,10 @@ If you need to setup the onboarding screen, you should use the provider created 
 
 * **ready** status of the influxdbv2, documentation [here](website/docs/d/ready.html.md)
 
+* **bucket** to create, update and delete bucket resources, documentation [here](website/docs/r/bucket.html.md)
+
+
+### Examples file
 Find more examples in `examples/`. To run them:
 ```bash
 terraform init
