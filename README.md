@@ -39,7 +39,7 @@ If you need to setup the onboarding screen, you should use the provider created 
 
 ### Available functionalities
 
-* **ready** status of the influxdbv2, documentation [here](website/docs/r/ready.html.md)
+* **ready** status of the influxdbv2, documentation [here](website/docs/d/ready.html.md)
 
 Find more examples in `examples/`. To run them:
 ```bash
