@@ -123,7 +123,7 @@ func resourceBucketUpdate(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("error updating bucket: %v", err)
 	}
 
-	return nil
+	return resourceBucketRead(d, meta)
 }
 
 func getRetentionRules(input interface{}) ([]influxdb.RetentionRules, error) {
