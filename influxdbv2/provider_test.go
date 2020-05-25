@@ -1,19 +1,15 @@
 package influxdbv2
 
 import (
+	"github.com/hashicorp/terraform-plugin-sdk/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"testing"
 )
 
-var testAccProviders map[string]terraform.ResourceProvider
-var testAccProvider *schema.Provider
-
-func init() {
-	testAccProvider = Provider().(*schema.Provider)
-	testAccProviders = map[string]terraform.ResourceProvider{
-		"influxdbv2": testAccProvider,
-	}
+var testProviders = map[string]terraform.ResourceProvider{
+	"influxdbv2": Provider(),
 }
 
 func TestProvider(t *testing.T) {
@@ -22,6 +18,7 @@ func TestProvider(t *testing.T) {
 	}
 }
 
-func TestProvider_impl(t *testing.T) {
-	var _ terraform.ResourceProvider = Provider()
+func TestMain(m *testing.M) {
+	acctest.UseBinaryDriver("influxdbv2", Provider)
+	resource.TestMain(m)
 }

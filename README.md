@@ -19,8 +19,28 @@ Don't forget to copy `terraform-provider-influxdbv2` to your terraform plugin di
 
 ## Test
 
+To run test, at first run this command to check fmt requirements:
+ 
 ```bash
-go test ./influxdbv2
+make fmt
+```
+
+Before executing tests, it is necessary to initialize the influxdb instance:
+
+```bash
+make initialize
+```
+
+Then run this command to test the provider instance test: 
+
+```bash
+make test
+```
+
+And finally to run acceptance test, run this command: 
+
+```bash
+make testacc
 ```
 
 ## How to use
