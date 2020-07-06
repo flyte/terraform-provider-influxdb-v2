@@ -16,7 +16,6 @@ resource "influxdbv2_bucket" "initial" {
     org_id = "94d518926178fea7"
     retention_rules {
         every_seconds = 45
-        type = "expire"
     }
     rp = ""
 }
@@ -62,7 +61,6 @@ The following arguments are supported:
 
 * ``retention_rules`` (Required) Retention rules that affects the bucket.
     * ``every_seconds`` (Required) How many seconds the rule should be applied.
-    * ``type`` (Optional) The type of the retention. Default is "expire".
 
 ## Attributes Reference
 

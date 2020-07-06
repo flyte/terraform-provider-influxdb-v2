@@ -2,9 +2,8 @@ package influxdbv2
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/lancey-energy-storage/influxdb-client-go"
+	"github.com/influxdata/influxdb-client-go"
 	"log"
 )
 
@@ -21,30 +20,23 @@ func DataReady() *schema.Resource {
 }
 
 func DataGetReady(d *schema.ResourceData, meta interface{}) error {
-	influx := meta.(*influxdb.Client)
-	result, err := influx.Ready(context.Background())
-	if err != nil {
-		return err
+	influx := meta.(influxdb2.Client)
+	bool, error := influx.Ready(context.Background())
+	if error != nil {
+		return error
+	}
+	if bool {
+		log.Printf("Server is ready !")
 	}
 
-	readyResult := &influxdb.ReadyResult{}
-
-	readyResult = result
-	var output map[string]interface{}
-	marshal, _ := json.Marshal(readyResult)
-	err = json.Unmarshal(marshal, &output)
-	if err != nil {
-		log.Printf("%s", err)
+	output := map[string]string{
+		"url": influx.ServerUrl(),
 	}
 
-	d.Set("output", output)
-	url, err := influx.GetUrl()
 	id := ""
-	if err != nil {
-		id = ""
-	}
-	id = url
+	id = influx.ServerUrl()
 	d.SetId(id)
+	d.Set("output", output)
 
 	return nil
 }
