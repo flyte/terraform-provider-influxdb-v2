@@ -25,7 +25,7 @@ To run test, at first run this command to check fmt requirements:
 make fmt
 ```
 
-Before executing tests, it is necessary to initialize the influxdb instance:
+Before executing tests, it is necessary to initialize the influxdbv2 instance:
 
 ```bash
 make initialize
