@@ -1,6 +1,6 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
-PKG_NAME=influxdbv2_onboarding
+PKG_NAME=influxdbv2
 
 default: build
 
@@ -24,7 +24,7 @@ vet:
 		exit 1; \
 	fi
 
-testacc: fmtcheck
+testacc: fmtcheck fmt
 	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
 
 
@@ -45,4 +45,4 @@ test-compile:
 	fi
 	go test -c $(TEST) $(TESTARGS)
 
-.PHONY: build test testacc vet fmt fmtcheck errcheck test-compile
+.PHONY: build test initialize testacc vet fmt fmtcheck errcheck test-compile

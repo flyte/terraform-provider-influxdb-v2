@@ -2,9 +2,11 @@
 
 echo "==> Initializing influxdb instance with its default data"
 echo "Initializing terraform"
-terraform init -plugin-dir=scripts/terraform.d/plugins/linux_amd64 scripts/
+cd scripts/
+terraform init -plugin-dir=../examples/terraform.d/plugins/linux_amd64
 
-terraform plan -out=plan scripts/
+echo "Planning terraform"
+terraform plan -out=plan
 
 echo "Applying configuration"
 terraform apply plan

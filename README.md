@@ -31,7 +31,7 @@ Before executing tests, it is necessary to initialize the influxdb instance:
 make initialize
 ```
 
-Then run this command to test the provider instance test: 
+Then run this command to test the provider instance test:
 
 ```bash
 make test
