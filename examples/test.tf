@@ -18,24 +18,15 @@ provider "influxdbv2" {
 data "influxdbv2_ready" "test" {}
 
 output "influxdbv2_ready" {
-    value = data.influxdbv2_ready.test.output["status"]
-}
-
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
+    value = data.influxdbv2_ready.test.output["url"]
 }
 
 resource "influxdbv2_bucket" "test" {
-    description = ""
-    name = "le bucket de test terraform"
+    description = "Le bucket terraform"
+    name = "le bucket de test terraform modifié "
     org_id = influxdbv2-onboarding_setup.setup.org_id
     retention_rules {
-        every_seconds = 40
-        type = "expire"
+        every_seconds = 10
     }
     rp = ""
 }
@@ -54,4 +45,13 @@ output "retention_rules" {
 }
 output "rp" {
     value = influxdbv2_bucket.test.rp
+}
+output "org_id" {
+    value = influxdbv2_bucket.test.org_id
+}
+output "name" {
+    value = influxdbv2_bucket.test.name
+}
+output "description" {
+    value = influxdbv2_bucket.test.description
 }
