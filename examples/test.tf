@@ -31,6 +31,55 @@ resource "influxdbv2_bucket" "test" {
     rp = ""
 }
 
+resource "influxdbv2_authorization" "fred" {
+    org_id = influxdbv2_bucket.test.org_id
+    description = "fred token"
+    status = "inactive"
+    permissions {
+        action = "read"
+        resource {
+            id = influxdbv2_bucket.test.id
+            org_id = influxdbv2_bucket.test.org_id
+            type = "buckets"
+        }
+    }
+    permissions {
+        action = "write"
+        resource {
+            id = influxdbv2_bucket.test.id
+            org_id = influxdbv2_bucket.test.org_id
+            type = "buckets"
+        }
+    }
+}
+
+output "org_id" {
+    value = influxdbv2_bucket.test.org_id
+}
+output "name" {
+    value = influxdbv2_bucket.test.name
+}
+output "description" {
+    value = influxdbv2_bucket.test.description
+}
+
+output "Token" {
+    value = influxdbv2_authorization.fred.token
+}
+output "status" {
+    value = influxdbv2_authorization.fred.status
+}
+output "user_id" {
+    value = influxdbv2_authorization.fred.user_id
+}
+output "user_org_id" {
+    value = influxdbv2_authorization.fred.user_org_id
+}
+output "auth_id" {
+    value = influxdbv2_authorization.fred.id
+}
+
+
 output "created_at" {
     value = influxdbv2_bucket.test.created_at
 }
@@ -45,13 +94,4 @@ output "retention_rules" {
 }
 output "rp" {
     value = influxdbv2_bucket.test.rp
-}
-output "org_id" {
-    value = influxdbv2_bucket.test.org_id
-}
-output "name" {
-    value = influxdbv2_bucket.test.name
-}
-output "description" {
-    value = influxdbv2_bucket.test.description
 }

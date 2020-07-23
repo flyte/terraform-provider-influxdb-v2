@@ -14,7 +14,8 @@ func Provider() terraform.ResourceProvider {
 			"influxdbv2_ready": DataReady(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"influxdbv2_bucket": ResourceBucket(),
+			"influxdbv2_bucket":        ResourceBucket(),
+			"influxdbv2_authorization": ResourceAuthorization(),
 		},
 		Schema: map[string]*schema.Schema{
 			"url": {
