@@ -2,6 +2,7 @@ package influxdbv2
 
 import (
 	"context"
+	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/influxdata/influxdb-client-go"
 	"log"
@@ -21,20 +22,20 @@ func DataReady() *schema.Resource {
 
 func DataGetReady(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(influxdb2.Client)
-	bool, error := influx.Ready(context.Background())
-	if error != nil {
-		return error
+	bool, err := influx.Ready(context.Background())
+	if err != nil {
+		return fmt.Errorf("server is not ready: %v", err)
 	}
 	if bool {
 		log.Printf("Server is ready !")
 	}
 
 	output := map[string]string{
-		"url": influx.ServerUrl(),
+		"url": influx.ServerURL(),
 	}
 
 	id := ""
-	id = influx.ServerUrl()
+	id = influx.ServerURL()
 	d.SetId(id)
 	d.Set("output", output)
 

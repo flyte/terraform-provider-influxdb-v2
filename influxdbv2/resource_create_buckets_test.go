@@ -12,7 +12,6 @@ import (
 func TestAccCreateBucket(t *testing.T) {
 	org, _ := exec.Command("sh", "-c", "terraform output -state=../scripts/terraform.tfstate org_id").CombinedOutput()
 	token, _ := exec.Command("sh", "-c", "terraform output -state=../scripts/terraform.tfstate token").CombinedOutput()
-
 	resource.Test(t, resource.TestCase{
 		Providers: testProviders,
 		Steps: []resource.TestStep{
@@ -51,7 +50,6 @@ func testAccCheckCreate(n string) resource.TestCheckFunc {
 func TestAccUpdateBucket(t *testing.T) {
 	org, _ := exec.Command("sh", "-c", "terraform output -state=../scripts/terraform.tfstate org_id").CombinedOutput()
 	token, _ := exec.Command("sh", "-c", "terraform output -state=../scripts/terraform.tfstate token").CombinedOutput()
-
 	resource.Test(t, resource.TestCase{
 		Providers: testProviders,
 		Steps: []resource.TestStep{
@@ -110,13 +108,13 @@ provider "influxdbv2" {
     token = "` + token + `"
 }
 resource "influxdbv2_bucket" "initial" {
-  description = "Le bucket modifié"
-  name = "le bucket de deploiement modifié"
-  org_id = "` + orgId + `"
-  retention_rules {
-    every_seconds = 30
-  }
-  rp = ""
+  	description = "Le bucket modifié"
+  	name = "le bucket de deploiement modifié"
+  	org_id = "` + orgId + `"
+  	retention_rules {
+		every_seconds = 30
+  	}
+  	rp = ""
 }
 `
 	return testAccUpdateBucket

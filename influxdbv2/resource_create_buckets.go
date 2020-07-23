@@ -70,7 +70,6 @@ func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error getting retention rules: %v", err)
 	}
-
 	desc := d.Get("description").(string)
 	orgid := d.Get("org_id").(string)
 	retpe := d.Get("rp").(string)
@@ -81,18 +80,17 @@ func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
 		RetentionRules: retentionRules,
 		Rp:             &retpe,
 	}
-	result, err := influx.BucketsApi().CreateBucket(context.Background(), newBucket)
+	result, err := influx.BucketsAPI().CreateBucket(context.Background(), newBucket)
 	if err != nil {
 		return fmt.Errorf("error creating bucket: %v", err)
 	}
-
 	d.SetId(*result.Id)
 	return resourceBucketRead(d, meta)
 }
 
 func resourceBucketDelete(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(influxdb2.Client)
-	err := influx.BucketsApi().DeleteBucketWithId(context.Background(), d.Id())
+	err := influx.BucketsAPI().DeleteBucketWithID(context.Background(), d.Id())
 	if err != nil {
 		return fmt.Errorf("error deleting bucket: %v", err)
 	}
@@ -102,7 +100,7 @@ func resourceBucketDelete(d *schema.ResourceData, meta interface{}) error {
 
 func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(influxdb2.Client)
-	result, err := influx.BucketsApi().FindBucketById(context.Background(), d.Id())
+	result, err := influx.BucketsAPI().FindBucketByID(context.Background(), d.Id())
 	if err != nil {
 		return fmt.Errorf("error getting bucket: %v", err)
 	}
@@ -137,7 +135,7 @@ func resourceBucketUpdate(d *schema.ResourceData, meta interface{}) error {
 		RetentionRules: retentionRules,
 		Rp:             &retpe,
 	}
-	_, err = influx.BucketsApi().UpdateBucket(context.Background(), updateBucket)
+	_, err = influx.BucketsAPI().UpdateBucket(context.Background(), updateBucket)
 
 	if err != nil {
 		return fmt.Errorf("error updating bucket: %v", err)
