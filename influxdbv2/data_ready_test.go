@@ -46,14 +46,8 @@ func testAccReadyOutput(n string) resource.TestCheckFunc {
 		if !ok {
 			return fmt.Errorf("not found %s", n)
 		}
-		if rs.Primary.Attributes["output.status"] == "" {
+		if rs.Primary.Attributes["output.url"] == "" {
 			return fmt.Errorf("instance is not ready")
-		}
-		if rs.Primary.Attributes["output.started"] == "" {
-			return fmt.Errorf("instance is not started")
-		}
-		if rs.Primary.Attributes["output.up"] == "" {
-			return fmt.Errorf("instance is not up")
 		}
 		return nil
 	}
@@ -62,6 +56,5 @@ func testAccReadyOutput(n string) resource.TestCheckFunc {
 func testAccReady() string {
 	var ready = `
 data "influxdbv2_ready" "test" {}`
-
 	return ready
 }

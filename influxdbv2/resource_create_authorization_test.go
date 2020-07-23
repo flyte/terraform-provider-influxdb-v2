@@ -37,7 +37,7 @@ func testAccCheckCreateAuthorization(n string) resource.TestCheckFunc {
 		if rs.Primary.Attributes["description"] != "test token" {
 			return fmt.Errorf("the authorization description is not correct, should be \"test token \", not: %v", rs.Primary.Attributes["description"])
 		}
-		if len(rs.Primary.Attributes["permissisions"]) != 2 {
+		if len(rs.Primary.Attributes["permissions"]) != 2 {
 			return fmt.Errorf("the authorization permissions doesn't have correct length, should be 2, not: %v", len(rs.Primary.Attributes["permissions"]))
 		}
 		if rs.Primary.Attributes["token"] == "" {
