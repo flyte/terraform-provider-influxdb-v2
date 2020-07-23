@@ -63,6 +63,7 @@ If you need to setup the onboarding screen, you should use the provider created 
 
 * **bucket** to create, update and delete bucket resources, documentation [here](website/docs/r/bucket.html.md)
 
+* **authorization** to create, update and delete authorization resource, documentation [here](website/docs/r/authorization.html.md)
 
 ### Examples file
 Find more examples in `examples/`. To run them:
