@@ -19,28 +19,24 @@ Don't forget to copy `terraform-provider-influxdbv2` to your terraform plugin di
 
 ## Test
 
-To run test, at first run this command to check fmt requirements:
+First execute this command to check fmt requirements:
  
 ```bash
 make fmt
 ```
 
-Before executing tests, it is necessary to initialize the influxdbv2 instance:
-
-```bash
-make initialize
-```
-
-Then run this command to test the provider instance test:
+Then execute this command to run the provider unit tests:
 
 ```bash
 make test
 ```
 
-And finally to run acceptance test, run this command: 
+And finally to run acceptance tests, execute these commands (requires `docker` and `jq`): 
 
 ```bash
+source ./scripts/setup_influxdb.sh
 make testacc
+make stop-influx
 ```
 
 ## How to use
@@ -74,5 +70,5 @@ terraform apply
 
 ## Dev
 
-In case you need to update the influx client, run `go get github.com/lancey-energy-storage/influxdb-client-go@<commit sha>`.  
+In case you need to update the influx client, run `go get github.com/influxdata/influxdb-client-go@<commit sha>`.  
 Also don't forget to run `go mod tidy` from time to time to remove useless dependencies.

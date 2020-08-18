@@ -10,15 +10,14 @@ require (
 	github.com/deepmap/oapi-codegen v1.3.11 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/go-test/deep v1.0.7 // indirect
+	github.com/hashicorp/go-getter v1.4.2-0.20200106182914-9813cbd4eb02 // indirect
 	github.com/hashicorp/go-hclog v0.14.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
 	github.com/hashicorp/go-plugin v1.3.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
 	github.com/hashicorp/go-version v1.2.1 // indirect
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.6.0 // indirect
-	github.com/hashicorp/terraform v0.12.29
 	github.com/hashicorp/terraform-config-inspect v0.0.0-20200526195750-d43f12b82861 // indirect
 	github.com/hashicorp/terraform-exec v0.3.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk v1.15.0
@@ -29,8 +28,6 @@ require (
 	github.com/jhump/protoreflect v1.7.0 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/labstack/echo/v4 v4.1.16 // indirect
-	github.com/lancey-energy-storage/influxdb-client-go v0.1.6-0.20200410160148-dc950e99699c
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/mitchellh/cli v1.1.1 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
@@ -42,7 +39,6 @@ require (
 	github.com/spf13/afero v1.3.2 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/ulikunitz/xz v0.5.7 // indirect
-	github.com/valyala/fasttemplate v1.2.0 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/zclconf/go-cty v1.5.1 // indirect
 	github.com/zclconf/go-cty-yaml v1.0.2 // indirect

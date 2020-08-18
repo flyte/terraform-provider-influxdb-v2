@@ -44,5 +44,9 @@ test-compile:
 		exit 1; \
 	fi
 	go test -c $(TEST) $(TESTARGS)
+    
+stop-influx:
+	docker stop tf_acc_tests_influxdb
+	docker rm tf_acc_tests_influxdb
 
 .PHONY: build test initialize testacc vet fmt fmtcheck errcheck test-compile

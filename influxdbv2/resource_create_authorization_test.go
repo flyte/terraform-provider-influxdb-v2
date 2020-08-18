@@ -1,86 +1,107 @@
 package influxdbv2
 
 import (
+	"context"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"os/exec"
-	"strings"
+	"github.com/influxdata/influxdb-client-go"
+	"os"
 	"testing"
 )
 
-func TestAccCreateAuthorization(t *testing.T) {
-	org, _ := exec.Command("sh", "-c", "terraform output -state=../scripts/terraform.tfstate org_id").CombinedOutput()
-	token, _ := exec.Command("sh", "-c", "terraform output -state=../scripts/terraform.tfstate token").CombinedOutput()
-
+func TestAccAuthorization(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		Providers: testProviders,
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccAuthorizationDestroyed,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCreateAuthorization(strings.TrimSuffix(string(token), "\n"), strings.TrimSuffix(string(org), "\n")),
+				Config: testAccCreateAuthorization(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckCreateAuthorization("influxdbv2_authorization.fred"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "description", "Acceptance test token"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "status", "inactive"),
+					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "user_id"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "user_org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "token"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					// permissions is a complex array... we'll just check it has the correct length
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "permissions.#", "2"),
+				),
+			},
+			{
+				Config: testAccUpdateAuthorization(),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "description", "Acceptance test token 2"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "status", "active"),
+					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "user_id"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "user_org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "token"),
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					// permissions is a complex array... we'll just check it has the correct length
+					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "permissions.#", "1"),
 				),
 			},
 		},
 	})
 }
-func testAccCheckCreateAuthorization(n string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		rs, ok := s.RootModule().Resources[n]
-		if !ok {
-			return fmt.Errorf("not found %s", n)
-		}
-		if rs.Primary.Attributes["status"] != "inactive" {
-			return fmt.Errorf("the authorization doesn't have correct status, should be inactive, not: %v", rs.Primary.Attributes["status"])
-		}
-		if rs.Primary.Attributes["description"] != "test token" {
-			return fmt.Errorf("the authorization description is not correct, should be \"test token \", not: %v", rs.Primary.Attributes["description"])
-		}
-		if rs.Primary.Attributes["token"] == "" {
-			return fmt.Errorf("the token is not correct, should not be empty")
-		}
 
-		return nil
-	}
-}
-
-func testAccCreateAuthorization(token string, orgId string) string {
-	var testAccConfigBucket = `
-provider "influxdbv2" {
-	url = "http://localhost:9999/"
-    token = "` + token + `"
-}
-resource "influxdbv2_bucket" "test" {
-    description = "Le bucket terraform" 
-    name = "le bucket de test terraform" 
-    org_id = "` + orgId + `"
-    retention_rules {
-        every_seconds = 40
-    }
-    rp = ""
-}
-resource "influxdbv2_authorization" "fred" {
-    org_id = influxdbv2_bucket.test.org_id
-    description = "test token"
+func testAccCreateAuthorization() string {
+	return `
+resource "influxdbv2_authorization" "acctest" {
+	org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
+    description = "Acceptance test token"
     status = "inactive"
     permissions {
         action = "read"
         resource {
-            id = influxdbv2_bucket.test.id
-            org_id = influxdbv2_bucket.test.org_id
+			id = "` + os.Getenv("INFLUXDB_V2_BUCKET_ID") + `"
+            org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
             type = "buckets"
         }
     }
     permissions {
         action = "write"
         resource {
-            id = influxdbv2_bucket.test.id
-            org_id = influxdbv2_bucket.test.org_id
+            id = "` + os.Getenv("INFLUXDB_V2_BUCKET_ID") + `"
+            org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
             type = "buckets"
         }
     }
 }
 `
-	return testAccConfigBucket
+}
+
+func testAccUpdateAuthorization() string {
+	return `
+resource "influxdbv2_authorization" "acctest" {
+	org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
+    description = "Acceptance test token 2"
+    status = "active"
+    permissions {
+        action = "read"
+        resource {
+			id = "` + os.Getenv("INFLUXDB_V2_BUCKET_ID") + `"
+            org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
+            type = "buckets"
+        }
+    }
+}
+`
+}
+
+func testAccAuthorizationDestroyed(s *terraform.State) error {
+	influx := influxdb2.NewClient(os.Getenv("INFLUXDB_V2_URL"), os.Getenv("INFLUXDB_V2_TOKEN"))
+	result, err := influx.AuthorizationsAPI().GetAuthorizations(context.Background())
+	// The only auth is from the onboarding
+	if len(*result) != 1 {
+		return fmt.Errorf("There should be only one remaining authorization but there are: %d", len(*result))
+	}
+	if err != nil {
+		return fmt.Errorf("Cannot read authorization list")
+	}
+
+	return nil
 }

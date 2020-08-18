@@ -1,60 +1,32 @@
 package influxdbv2
 
 import (
-	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"os"
 	"testing"
 )
 
 func TestAccReady(t *testing.T) {
+	currentUrl, exists := os.LookupEnv("INFLUXDB_V2_URL")
+	if !exists {
+		currentUrl = "http://localhost:9999"
+	}
+
 	resource.Test(t, resource.TestCase{
-		Providers: testProviders,
+		// no need to precheck the token env var, we don't need it
+		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccReady(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckReady("data.influxdbv2_ready.test"),
-				),
-			},
-			{
-				Config: testAccReady(),
-				Check: resource.ComposeTestCheckFunc(
-					testAccReadyOutput("data.influxdbv2_ready.test"),
+					resource.TestCheckResourceAttr("data.influxdbv2_ready.acctest", "output.url", currentUrl),
 				),
 			},
 		},
 	})
 }
 
-func testAccCheckReady(n string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		rs, ok := s.RootModule().Resources[n]
-		if !ok {
-			return fmt.Errorf("not found %s", n)
-		}
-		if rs.Primary.ID == "" {
-			return fmt.Errorf("instance is not up")
-		}
-		return nil
-	}
-}
-
-func testAccReadyOutput(n string) resource.TestCheckFunc {
-	return func(s *terraform.State) error {
-		rs, ok := s.RootModule().Resources[n]
-		if !ok {
-			return fmt.Errorf("not found %s", n)
-		}
-		if rs.Primary.Attributes["output.url"] == "" {
-			return fmt.Errorf("instance is not ready")
-		}
-		return nil
-	}
-}
-
 func testAccReady() string {
-	var ready = `
-data "influxdbv2_ready" "test" {}`
-	return ready
+	return `
+data "influxdbv2_ready" "acctest" {}`
 }
