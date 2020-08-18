@@ -3,49 +3,32 @@ layout: "influxdbv2"
 page_title: "InfluxDB V2: influxdbv2_authorization"
 sidebar_current: "docs-influxdbv2-resource-authorization"
 description: |-
-  The influxdbv2_authorization resource allows an InfluxDB to create, update and delete authorizations.
+  The influxdbv2_authorization resource manages influxdb v2 authorizations.
 ---
 
 ## Example Usage
 
-### Create a new authorization
 ```hcl
-resource "influxdbv2_authorization" "new_authorization" {
-    org_id = influxdbv2_bucket.test.org_id
-        description = "new token"
-        status = "inactive"
+resource "influxdbv2_authorization" "my_service" {
+    org_id = <related organization id>
+        description = "a token for my service"
+        status = "active"
         permissions {
             action = "read"
             resource {
-                id = influxdbv2_bucket.test.id
-                org_id = influxdbv2_bucket.test.org_id
+                id = <some bucket id>
+                org_id = <related organization id>
                 type = "buckets"
             }
         }
         permissions {
             action = "write"
             resource {
-                id = influxdbv2_bucket.test.id
-                org_id = influxdbv2_bucket.test.org_id
+                id = <some bucket id>
+                org_id =  <related organization id>
                 type = "buckets"
             }
         }
-}
-```
-
-### Output usage
-```hcl
-output "Token" {
-    value = influxdbv2_authorization.new_authorization.token
-}
-output "status" {
-    value = influxdbv2_authorization.new_authorization.status
-}
-output "user_id" {
-    value = influxdbv2_authorization.new_authorization.user_id
-}
-output "user_org_id" {
-    value = influxdbv2_authorization.new_authorization.user_org_id
 }
 ```
 
@@ -53,17 +36,17 @@ output "user_org_id" {
 
 The following arguments are supported: 
 
-* ``description`` (Optional) The description of the bucket.
-* ``org_id`` (Required) The organization id the bucket is linked.
-* ``status`` (Optional) Status of the authorization, can be "active" or "inactive" - Default "active"
-* ``permissions`` (Required) Permissions array of the authorization.
+* ``org_id`` (Required) The organization id to which the authorization will be linked.
+* ``permissions`` (Required) Permission array of the authorization.
     * ``action`` (Required) Action of the permission, can be "read" or "write".
-    * ``resource`` (Required) Object Resource
-        * ``id`` (Required) ID of the resource the permission is linked
+    * ``resource`` (Required) Permission resource
+        * ``id`` (Required) ID of the resource to which the permission is linked
+        * ``orgID`` (Required) Organization ID to link to.
+        * ``type`` (Required) The type of authorization, can be "authorizations" "buckets" "dashboards" "orgs" "sources" "tasks" "telegrafs" "users" "variables" "scrapers" "secrets" "labels" "views" "documents" "notificationRules" "notificationEndpoints" "checks" "dbrp"
         * ``name`` (Optional) Name of the resource 
         * ``org`` (Optional) Name of the organization with orgID.
-        * ``orgID`` (Required) Org ID to link to.
-        * ``type`` (Required) The type of authorization, can be "authorizations" "buckets" "dashboards" "orgs" "sources" "tasks" "telegrafs" "users" "variables" "scrapers" "secrets" "labels" "views" "documents" "notificationRules" "notificationEndpoints" "checks" "dbrp"
+* ``status`` (Optional) Status of the authorization, can be "active" or "inactive" - Default "active"
+* ``description`` (Optional) The description of the bucket.
 
 ## Attributes Reference
 

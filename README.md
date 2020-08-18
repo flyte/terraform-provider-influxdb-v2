@@ -3,12 +3,6 @@
 The InfluxDB V2 provider allows Terraform to manage
 [InfluxDB v2](https://www.influxdata.com/products/influxdb-overview/).
 
-The provider configuration block accepts the following arguments:
-
-* ``url`` (Optional) The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable. Defaults to `http://localhost:9999/`.
-
-* ``token`` (Optional) The token that gives access to the influxdb instance. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
-
 ## Build
 
 ```bash
@@ -43,7 +37,6 @@ make stop-influx
 
 ### Initialize the provider
 
-If you already setup the initial onboarding screen, it is necessary to get the access token and set it up like below.
 ```hcl
 provider "influxdbv2" {
   url = "http://influxdb.example.com:9999"
@@ -51,22 +44,42 @@ provider "influxdbv2" {
 }
 ```
 
-If you need to setup the onboarding screen, you should use the provider created for that. To use it, see the documentation [here](https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2-onboarding)
+The provider configuration block accepts the following arguments:
+
+* ``url`` (Optional) The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable. Defaults to `http://localhost:9999/`.
+
+* ``token`` (Optional) The token that gives access to the influxdb instance. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
+
+A token can be acquired by executing the *onboarding* process, which is possible using:
+
+* influx GUI, API or command line (manually)
+* the dedicated provider (terraform) available [here](https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2-onboarding)
 
 ### Available functionalities
 
-* **ready** status of the influxdbv2, documentation [here](website/docs/d/ready.html.md)
+Documentation is available in [website/docs/](website/docs/).
+Influxdb v2 api documentation is available [here](https://v2.docs.influxdata.com/v2.0/api/).
 
-* **bucket** to create, update and delete bucket resources, documentation [here](website/docs/r/bucket.html.md)
+#### Data sources
 
-* **authorization** to create, update and delete authorization resource, documentation [here](website/docs/r/authorization.html.md)
+* ready (status of the influxdbv2 instance)
 
-### Examples file
-Find more examples in `examples/`. To run them:
+#### Resources
+
+* bucket
+
+* authorization (tokens)
+
+### Examples
+
+Find examples in `examples/`. To run them:
+
 ```bash
 terraform init
 terraform apply
 ```
+
+You can use `scripts/https://v2.docs.influxdata.com/v2.0/api/` to start and onboard influxdb.
 
 ## Dev
 
