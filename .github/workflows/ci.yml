@@ -1,0 +1,34 @@
+name: CI
+on: [push, pull_request]
+jobs:
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+
+      - name: Setup influxdb
+        run: |
+          source ./scripts/setup_influxdb.sh
+          echo "::set-env name=INFLUXDB_V2_URL::$INFLUXDB_V2_URL"
+          echo "::set-env name=INFLUXDB_V2_TOKEN::$INFLUXDB_V2_TOKEN"
+          echo "::set-env name=INFLUXDB_V2_BUCKET_ID::$INFLUXDB_V2_BUCKET_ID"
+          echo "::set-env name=INFLUXDB_V2_ORG_ID::$INFLUXDB_V2_ORG_ID"
+
+      - name: Go fmt
+        run: make fmt
+
+      - name: Run unit tests
+        run: make test
+
+      - name: Run acceptance tests
+        run: make testacc
