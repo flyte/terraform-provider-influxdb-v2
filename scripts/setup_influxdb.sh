@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 echo "1) launching influx"
-docker stop tf_acc_tests_influxdb
-docker rm tf_acc_tests_influxdb
 docker run -d --name tf_acc_tests_influxdb -p 9999:9999 quay.io/influxdb/influxdb:2.0.0-beta
 while ! $(curl -sS 'http://localhost:9999/ready' | grep -q ready); do echo 'Waiting for influx...'; sleep 1; done
 
