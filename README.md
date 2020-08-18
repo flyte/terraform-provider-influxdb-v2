@@ -19,8 +19,24 @@ Don't forget to copy `terraform-provider-influxdbv2` to your terraform plugin di
 
 ## Test
 
+First execute this command to check fmt requirements:
+ 
 ```bash
-go test ./influxdbv2
+make fmt
+```
+
+Then execute this command to run the provider unit tests:
+
+```bash
+make test
+```
+
+And finally to run acceptance tests, execute these commands (requires `docker` and `jq`): 
+
+```bash
+source ./scripts/setup_influxdb.sh
+make testacc
+make stop-influx
 ```
 
 ## How to use
@@ -43,6 +59,7 @@ If you need to setup the onboarding screen, you should use the provider created 
 
 * **bucket** to create, update and delete bucket resources, documentation [here](website/docs/r/bucket.html.md)
 
+* **authorization** to create, update and delete authorization resource, documentation [here](website/docs/r/authorization.html.md)
 
 ### Examples file
 Find more examples in `examples/`. To run them:
@@ -53,5 +70,5 @@ terraform apply
 
 ## Dev
 
-In case you need to update the influx client, run `go get github.com/lancey-energy-storage/influxdb-client-go@<commit sha>`.  
+In case you need to update the influx client, run `go get github.com/influxdata/influxdb-client-go@<commit sha>`.  
 Also don't forget to run `go mod tidy` from time to time to remove useless dependencies.

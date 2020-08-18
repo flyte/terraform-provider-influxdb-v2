@@ -8,7 +8,8 @@ description: |-
 
 # influxdbv2\_ready
 
-The influxdbv2_ready data source allows to get the information status of the InfluxDB V2.
+The influxdbv2_ready data source allows to get the information status of the InfluxDB V2. If the endpoint server is
+online, the function will output its URL.
 
 ## Example Usage
 
@@ -16,15 +17,7 @@ The influxdbv2_ready data source allows to get the information status of the Inf
 data "influxdbv2_ready" "test" {}
 
 output "influxdbv2_ready" {
-   value = data.influxdbv2_ready.test.output["status"]
-}
-
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
+   value = data.influxdbv2_ready.test.output["url"]
 }
 
 ```

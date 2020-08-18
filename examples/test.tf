@@ -18,27 +18,67 @@ provider "influxdbv2" {
 data "influxdbv2_ready" "test" {}
 
 output "influxdbv2_ready" {
-    value = data.influxdbv2_ready.test.output["status"]
-}
-
-output "ready_started"  {
-    value = data.influxdbv2_ready.test.output["started"]
-}
-
-output "ready_up"  {
-    value = data.influxdbv2_ready.test.output["up"]
+    value = data.influxdbv2_ready.test.output["url"]
 }
 
 resource "influxdbv2_bucket" "test" {
-    description = ""
-    name = "le bucket de test terraform"
+    description = "Le bucket terraform"
+    name = "le bucket de test terraform modifié "
     org_id = influxdbv2-onboarding_setup.setup.org_id
     retention_rules {
-        every_seconds = 40
-        type = "expire"
+        every_seconds = 10
     }
     rp = ""
 }
+
+resource "influxdbv2_authorization" "fred" {
+    org_id = influxdbv2_bucket.test.org_id
+    description = "fred token"
+    status = "inactive"
+    permissions {
+        action = "read"
+        resource {
+            id = influxdbv2_bucket.test.id
+            org_id = influxdbv2_bucket.test.org_id
+            type = "buckets"
+        }
+    }
+    permissions {
+        action = "write"
+        resource {
+            id = influxdbv2_bucket.test.id
+            org_id = influxdbv2_bucket.test.org_id
+            type = "buckets"
+        }
+    }
+}
+
+output "org_id" {
+    value = influxdbv2_bucket.test.org_id
+}
+output "name" {
+    value = influxdbv2_bucket.test.name
+}
+output "description" {
+    value = influxdbv2_bucket.test.description
+}
+
+output "Token" {
+    value = influxdbv2_authorization.fred.token
+}
+output "status" {
+    value = influxdbv2_authorization.fred.status
+}
+output "user_id" {
+    value = influxdbv2_authorization.fred.user_id
+}
+output "user_org_id" {
+    value = influxdbv2_authorization.fred.user_org_id
+}
+output "auth_id" {
+    value = influxdbv2_authorization.fred.id
+}
+
 
 output "created_at" {
     value = influxdbv2_bucket.test.created_at

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/lancey-energy-storage/influxdb-client-go"
+	"github.com/influxdata/influxdb-client-go"
 )
 
 func Provider() terraform.ResourceProvider {
@@ -14,7 +14,8 @@ func Provider() terraform.ResourceProvider {
 			"influxdbv2_ready": DataReady(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"influxdbv2_bucket": ResourceBucket(),
+			"influxdbv2_bucket":        ResourceBucket(),
+			"influxdbv2_authorization": ResourceAuthorization(),
 		},
 		Schema: map[string]*schema.Schema{
 			"url": {
@@ -34,12 +35,9 @@ func Provider() terraform.ResourceProvider {
 }
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	influx, error := influxdb.New(d.Get("url").(string), d.Get("token").(string))
-	if error != nil {
-		return nil, fmt.Errorf("invalid InfluxDBv2 URL: %s", error)
-	}
+	influx := influxdb2.NewClient(d.Get("url").(string), d.Get("token").(string))
 
-	err := influx.Ping(context.Background())
+	_, err := influx.Ready(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("error pinging server: %s", err)
 	}

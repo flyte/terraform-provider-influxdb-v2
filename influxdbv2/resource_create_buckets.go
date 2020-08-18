@@ -1,9 +1,11 @@
 package influxdbv2
 
 import (
+	"context"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/lancey-energy-storage/influxdb-client-go"
+	"github.com/influxdata/influxdb-client-go"
+	"github.com/influxdata/influxdb-client-go/domain"
 )
 
 func ResourceBucket() *schema.Resource {
@@ -46,10 +48,6 @@ func ResourceBucket() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"type": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
 			"created_at": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -58,30 +56,41 @@ func ResourceBucket() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"type": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
 
 func resourceBucketCreate(d *schema.ResourceData, meta interface{}) error {
-	influx := meta.(*influxdb.Client)
-	rr := d.Get("retention_rules")
-	retentionRules, err := getRetentionRules(rr)
+	influx := meta.(influxdb2.Client)
+	retentionRules, err := getRetentionRules(d.Get("retention_rules"))
 	if err != nil {
 		return fmt.Errorf("error getting retention rules: %v", err)
 	}
-
-	result, err := influx.CreateBucket(d.Get("description").(string), d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
+	desc := d.Get("description").(string)
+	orgid := d.Get("org_id").(string)
+	retpe := d.Get("rp").(string)
+	newBucket := &domain.Bucket{
+		Description:    &desc,
+		Name:           d.Get("name").(string),
+		OrgID:          &orgid,
+		RetentionRules: retentionRules,
+		Rp:             &retpe,
+	}
+	result, err := influx.BucketsAPI().CreateBucket(context.Background(), newBucket)
 	if err != nil {
 		return fmt.Errorf("error creating bucket: %v", err)
 	}
-
-	d.SetId(result.Id)
+	d.SetId(*result.Id)
 	return resourceBucketRead(d, meta)
 }
 
 func resourceBucketDelete(d *schema.ResourceData, meta interface{}) error {
-	influx := meta.(*influxdb.Client)
-	err := influx.DeleteABucket(d.Id())
+	influx := meta.(influxdb2.Client)
+	err := influx.BucketsAPI().DeleteBucketWithID(context.Background(), d.Id())
 	if err != nil {
 		return fmt.Errorf("error deleting bucket: %v", err)
 	}
@@ -90,8 +99,8 @@ func resourceBucketDelete(d *schema.ResourceData, meta interface{}) error {
 }
 
 func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
-	influx := meta.(*influxdb.Client)
-	result, err := influx.GetBucketByID(d.Id())
+	influx := meta.(influxdb2.Client)
+	result, err := influx.BucketsAPI().FindBucketByID(context.Background(), d.Id())
 	if err != nil {
 		return fmt.Errorf("error getting bucket: %v", err)
 	}
@@ -100,25 +109,34 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	d.Set("org_id", result.OrgID)
 	d.Set("retention_rules", result.RetentionRules)
 	d.Set("rp", result.Rp)
-
+	d.Set("created_at", result.CreatedAt.String())
+	d.Set("updated_at", result.UpdatedAt.String())
 	d.Set("type", result.Type)
-	d.Set("created_at", result.CreatedAt)
-	d.Set("updated_at", result.UpdatedAt)
 
 	return nil
 }
 
 func resourceBucketUpdate(d *schema.ResourceData, meta interface{}) error {
-	influx := meta.(*influxdb.Client)
-
+	influx := meta.(influxdb2.Client)
 	retentionRules, err := getRetentionRules(d.Get("retention_rules"))
 	if err != nil {
 		return fmt.Errorf("error getting retention rules: %v", err)
 	}
 
-	labels := []influxdb.Labels{}
+	id := d.Id()
+	desc := d.Get("description").(string)
+	orgid := d.Get("org_id").(string)
+	retpe := d.Get("rp").(string)
+	updateBucket := &domain.Bucket{
+		Id:             &id,
+		Description:    &desc,
+		Name:           d.Get("name").(string),
+		OrgID:          &orgid,
+		RetentionRules: retentionRules,
+		Rp:             &retpe,
+	}
+	_, err = influx.BucketsAPI().UpdateBucket(context.Background(), updateBucket)
 
-	_, err = influx.UpdateABucket(d.Id(), d.Get("description").(string), labels, d.Get("name").(string), d.Get("org_id").(string), retentionRules, d.Get("rp").(string))
 	if err != nil {
 		return fmt.Errorf("error updating bucket: %v", err)
 	}
@@ -126,13 +144,13 @@ func resourceBucketUpdate(d *schema.ResourceData, meta interface{}) error {
 	return resourceBucketRead(d, meta)
 }
 
-func getRetentionRules(input interface{}) ([]influxdb.RetentionRules, error) {
-	result := []influxdb.RetentionRules{}
+func getRetentionRules(input interface{}) (domain.RetentionRules, error) {
+	result := domain.RetentionRules{}
 	retentionRulesSet := input.(*schema.Set).List()
 	for _, retentionRule := range retentionRulesSet {
 		rr, ok := retentionRule.(map[string]interface{})
 		if ok {
-			each := influxdb.RetentionRules{Type: rr["type"].(string), EverySeconds: rr["every_seconds"].(int)}
+			each := domain.RetentionRule{EverySeconds: rr["every_seconds"].(int)}
 			result = append(result, each)
 		}
 	}
