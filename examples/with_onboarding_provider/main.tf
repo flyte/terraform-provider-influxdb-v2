@@ -12,7 +12,7 @@ resource "influxdbv2-onboarding_setup" "setup" {
     retention_period = 4
 }
 
-# Influxdbv2 provider use
+# Influxdbv2 provider
 
 provider "influxdbv2" {
     url = "http://localhost:9999/"
@@ -26,7 +26,7 @@ output "influxdbv2_is_ready" {
 }
 
 resource "influxdbv2_bucket" "temp" {
-    description = "Temperature sensors dara."
+    description = "Temperature sensors data"
     name = "temp"
     org_id = influxdbv2-onboarding_setup.setup.org_id
     retention_rules {
@@ -35,14 +35,14 @@ resource "influxdbv2_bucket" "temp" {
 }
 
 resource "influxdbv2_authorization" "api" {
-    org_id = influxdbv2_bucket.temp.org_id
-    description = "Influxdb token to give api access to the temp bucket."
+    org_id = influxdbv2-onboarding_setup.setup.org_id
+    description = "api token"
     status = "active"
     permissions {
         action = "read"
         resource {
             id = influxdbv2_bucket.temp.id
-            org_id = influxdbv2_bucket.temp.org_id
+            org_id = influxdbv2-onboarding_setup.setup.org_id
             type = "buckets"
         }
     }
@@ -50,7 +50,7 @@ resource "influxdbv2_authorization" "api" {
         action = "write"
         resource {
             id = influxdbv2_bucket.temp.id
-            org_id = influxdbv2_bucket.temp.org_id
+            org_id = influxdbv2-onboarding_setup.setup.org_id
             type = "buckets"
         }
     }

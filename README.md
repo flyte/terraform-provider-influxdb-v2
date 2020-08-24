@@ -75,8 +75,10 @@ Influxdb v2 api documentation is available [here](https://v2.docs.influxdata.com
 Find examples in `examples/`. To run them:
 
 ```bash
+source ./start_influxdb.sh
 terraform init
 terraform apply
+./stop_influxdb.sh
 ```
 
 You can use `scripts/https://v2.docs.influxdata.com/v2.0/api/` to start and onboard influxdb.
