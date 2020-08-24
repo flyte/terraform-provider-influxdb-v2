@@ -1,3 +1,16 @@
+terraform {
+  required_providers {
+    influxdbv2-onboarding = {
+      source = "lancey-energy-storage/influxdbv2-onboarding"
+      version = "0.2.0"
+    }
+    influxdbv2 = {
+      source = "lancey-energy-storage/influxdbv2"
+      version = "0.1.0"
+    }
+  }
+}
+
 # Onboarding
 
 provider "influxdbv2-onboarding" {

@@ -1,39 +1,34 @@
-# InfluxDB V2 Provider
+# InfluxDB v2 Provider
 
-The InfluxDB V2 provider allows Terraform to manage
+The InfluxDB v2 provider allows Terraform to manage
 [InfluxDB v2](https://www.influxdata.com/products/influxdb-overview/).
 
-## Build
-
-```bash
-go build -o terraform-provider-influxdbv2
-```
-
-Don't forget to copy `terraform-provider-influxdbv2` to your terraform plugin directory (eg. `~/.terraform.d/plugins/linux_amd64` on linux).
-
-## Test
-
-First execute this command to check fmt requirements:
- 
-```bash
-make fmt
-```
-
-Then execute this command to run the provider unit tests:
-
-```bash
-make test
-```
-
-And finally to run acceptance tests, execute these commands (requires `docker` and `jq`): 
-
-```bash
-source ./scripts/setup_influxdb.sh
-make testacc
-make stop-influx
-```
-
 ## How to use
+
+### Download the provider
+
+#### Terraform 0.12.x
+
+Download the release and extract it to (on linux):  
+`~/.terraform.d/plugins/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
+
+#### Terraform 0.13.x
+
+Add this snippet to your code:
+
+```hcl
+terraform {
+  required_providers {
+    influxdbv2 = {
+      source = "lancey-energy-storage/influxdbv2"
+      version = "0.1.0"
+    }
+  }
+}
+```
+
+Until the provider is available on registry.terraform.io, you need to manually download the release and extract it to, eg (on linux):   
+`~/.terraform.d/plugins/registry.terraform.io/lancey-energy-storage/influxdbv2/0.1.0/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
 
 ### Initialize the provider
 
@@ -81,9 +76,35 @@ terraform apply
 ./stop_influxdb.sh
 ```
 
-You can use `scripts/https://v2.docs.influxdata.com/v2.0/api/` to start and onboard influxdb.
-
 ## Dev
 
 In case you need to update the influx client, run `go get github.com/influxdata/influxdb-client-go@<commit sha>`.  
 Also don't forget to run `go mod tidy` from time to time to remove useless dependencies.
+
+### Test
+
+First execute this command to check fmt requirements:
+ 
+```bash
+make fmt
+```
+
+Then execute this command to run the provider unit tests:
+
+```bash
+make test
+```
+
+And finally to run acceptance tests, execute these commands (requires `docker` and `jq`): 
+
+```bash
+source ./scripts/setup_influxdb.sh
+make testacc
+make stop-influx
+```
+
+### Build
+
+```bash
+go build -o terraform-provider-influxdbv2
+```
