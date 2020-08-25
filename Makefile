@@ -9,6 +9,10 @@ initialize:
 
 build: fmtcheck
 	go install
+	
+clean:
+	@rm terraform-provider-influxdbv2
+	@go clean -testcache
 
 test: fmtcheck
 	go test -i $(TEST) || exit 1

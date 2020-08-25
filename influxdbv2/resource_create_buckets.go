@@ -3,7 +3,7 @@ package influxdbv2
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/influxdata/influxdb-client-go"
 	"github.com/influxdata/influxdb-client-go/domain"
 )
@@ -104,10 +104,11 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error getting bucket: %v", err)
 	}
+	
 	d.Set("name", result.Name)
 	d.Set("description", result.Description)
 	d.Set("org_id", result.OrgID)
-	d.Set("retention_rules", result.RetentionRules)
+	d.Set("retention_rules", result)
 	d.Set("rp", result.Rp)
 	d.Set("created_at", result.CreatedAt.String())
 	d.Set("updated_at", result.UpdatedAt.String())
