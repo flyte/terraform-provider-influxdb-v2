@@ -2,7 +2,7 @@ terraform {
   required_providers {
     influxdbv2 = {
       source = "lancey-energy-storage/influxdbv2"
-      version = "0.1.0"
+      version = "0.3.0"
     }
   }
 }

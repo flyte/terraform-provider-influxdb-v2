@@ -10,7 +10,7 @@ The InfluxDB v2 provider allows Terraform to manage
 #### Terraform 0.12.x
 
 Download the release and extract it to (on linux):  
-`~/.terraform.d/plugins/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
+`~/.terraform.d/plugins/linux_amd64/terraform-provider-influxdbv2_v0.3.0`
 
 #### Terraform 0.13.x
 
@@ -21,14 +21,14 @@ terraform {
   required_providers {
     influxdbv2 = {
       source = "lancey-energy-storage/influxdbv2"
-      version = "0.1.0"
+      version = "0.3.0"
     }
   }
 }
 ```
 
 Until the provider is available on registry.terraform.io, you need to manually download the release and extract it to, eg (on linux):   
-`~/.terraform.d/plugins/registry.terraform.io/lancey-energy-storage/influxdbv2/0.1.0/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
+`~/.terraform.d/plugins/registry.terraform.io/lancey-energy-storage/influxdbv2/0.3.0/linux_amd64/terraform-provider-influxdbv2_v0.3.0`
 
 ### Initialize the provider
 
