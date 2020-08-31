@@ -104,11 +104,21 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error getting bucket: %v", err)
 	}
-	
+
+	// Reformat retention rules array
+	var rr []map[string]interface{}
+	for _, retention_rule := range result.RetentionRules {
+		tmp := map[string]interface{}{
+			"every_seconds": retention_rule.EverySeconds,
+			"type":          retention_rule.Type,
+		}
+		rr = append(rr, tmp)
+	}
+
 	d.Set("name", result.Name)
 	d.Set("description", result.Description)
 	d.Set("org_id", result.OrgID)
-	d.Set("retention_rules", result)
+	d.Set("retention_rules", rr)
 	d.Set("rp", result.Rp)
 	d.Set("created_at", result.CreatedAt.String())
 	d.Set("updated_at", result.UpdatedAt.String())
