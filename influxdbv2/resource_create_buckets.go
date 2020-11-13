@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/influxdata/influxdb-client-go"
-	"github.com/influxdata/influxdb-client-go/domain"
+	"github.com/influxdata/influxdb-client-go/v2"
+	"github.com/influxdata/influxdb-client-go/v2/domain"
+	"strconv"
 )
 
 func ResourceBucket() *schema.Resource {
@@ -29,12 +30,13 @@ func ResourceBucket() *schema.Resource {
 			},
 			"retention_rules": {
 				Type:     schema.TypeSet,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"every_seconds": {
-							Type:     schema.TypeInt,
-							Required: true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Default: "Forever",
 						},
 						"type": {
 							Type:     schema.TypeString,
@@ -47,6 +49,7 @@ func ResourceBucket() *schema.Resource {
 			"rp": {
 				Type:     schema.TypeString,
 				Optional: true,
+				Default: "inf",
 			},
 			"created_at": {
 				Type:     schema.TypeString,
@@ -161,7 +164,11 @@ func getRetentionRules(input interface{}) (domain.RetentionRules, error) {
 	for _, retentionRule := range retentionRulesSet {
 		rr, ok := retentionRule.(map[string]interface{})
 		if ok {
-			each := domain.RetentionRule{EverySeconds: rr["every_seconds"].(int)}
+			seconds, err := strconv.Atoi(rr["every_seconds"].(string))
+			if err != nil {
+				return nil, nil
+			}
+			each := domain.RetentionRule{EverySeconds: seconds}
 			result = append(result, each)
 		}
 	}
