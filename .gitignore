@@ -7,5 +7,4 @@ terraform-provider-influxdbv2
 terraform.tfstate
 terraform.tfstate.backup
 
-# IDE files
 .idea
