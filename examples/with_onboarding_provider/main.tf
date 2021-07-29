@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     influxdbv2-onboarding = {
-      source = "lancey-energy-storage/influxdbv2-onboarding"
+      source = "lancey.fr/influx/influxdbv2-onboarding"
       version = "0.2.0"
     }
     influxdbv2 = {
-      source = "lancey-energy-storage/influxdbv2"
-      version = "0.1.0"
+      source = "lancey.fr/influx/influxdbv2"
+      version = "0.3.0"
     }
   }
 }
@@ -14,7 +14,7 @@ terraform {
 # Onboarding
 
 provider "influxdbv2-onboarding" {
-    url = "http://localhost:9999"
+    url = "http://localhost:8086"
 }
 
 resource "influxdbv2-onboarding_setup" "setup" {
@@ -25,10 +25,14 @@ resource "influxdbv2-onboarding_setup" "setup" {
     retention_period = 4
 }
 
+output "onboarding-token" {
+    value = influxdbv2-onboarding_setup.setup.token
+}
+
 # Influxdbv2 provider
 
 provider "influxdbv2" {
-    url = "http://localhost:9999/"
+    url = "http://localhost:8086/"
     token = influxdbv2-onboarding_setup.setup.token
 }
 
