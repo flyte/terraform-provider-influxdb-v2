@@ -9,7 +9,7 @@ import (
 func TestAccReady(t *testing.T) {
 	currentUrl, exists := os.LookupEnv("INFLUXDB_V2_URL")
 	if !exists {
-		currentUrl = "http://localhost:9999"
+		currentUrl = "http://localhost:8086"
 	}
 
 	resource.Test(t, resource.TestCase{

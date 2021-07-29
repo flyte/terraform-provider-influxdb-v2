@@ -29,7 +29,7 @@ vet:
 	fi
 
 testacc: fmtcheck fmt
-	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
+	go test $(TEST) -v $(TESTARGS) -timeout 120m
 
 
 fmtcheck:
