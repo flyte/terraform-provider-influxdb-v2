@@ -7,10 +7,14 @@ The InfluxDB v2 provider allows Terraform to manage
 
 ### Download the provider
 
-#### Terraform 0.12.x
-
-Download the release and extract it to (on linux):  
-`~/.terraform.d/plugins/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
+    cd examples
+    mkdir -p terraform.d/plugins/lancey.fr/influx/influxdbv2/0.3.0/linux_amd64/
+    cd terraform.d/plugins/lancey.fr/influx/influxdbv2/0.3.0/linux_amd64/
+    wget https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2/releases/download/v0.3.0/terraform-provider-influxdbv2_v0.3.0-v0.3.0-linux-amd64.tar.gz
+    tar xvzf terraform-provider-influxdbv2_v0.3.0-v0.3.0-linux-amd64.tar.gz && rm -rf terraform-provider-influxdbv2_v0.3.0-v0.3.0-linux-amd64.tar.gz
+    filename=$(echo terraform-provider-influxdbv2*)
+    chmod +x $filename
+    mv "$filename" "${filename%.*}"
 
 #### Terraform 0.13.x
 
@@ -20,28 +24,25 @@ Add this snippet to your code:
 terraform {
   required_providers {
     influxdbv2 = {
-      source = "lancey-energy-storage/influxdbv2"
-      version = "0.1.0"
+      source = "lancey.fr/influx/influxdbv2"
+      version = "0.3.0"
     }
   }
 }
 ```
 
-Until the provider is available on registry.terraform.io, you need to manually download the release and extract it to, eg (on linux):   
-`~/.terraform.d/plugins/registry.terraform.io/lancey-energy-storage/influxdbv2/0.1.0/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
-
 ### Initialize the provider
 
 ```hcl
 provider "influxdbv2" {
-  url = "http://influxdb.example.com:9999"
+  url = "http://influxdb.example.com:8086"
   token = "influxdbToken"
 }
 ```
 
 The provider configuration block accepts the following arguments:
 
-* ``url`` (Optional) The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable. Defaults to `http://localhost:9999/`.
+* ``url`` (Optional) The root URL of a InfluxDB V2 server. May alternatively be set via the `INFLUXDB_V2_URL` environment variable. Defaults to `http://localhost:8086/`.
 
 * ``token`` (Optional) The token that gives access to the influxdb instance. May alternatively be set via the `INFLUXDB_V2_TOKEN` environment variable.
 

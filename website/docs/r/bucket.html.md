@@ -34,6 +34,6 @@ The following arguments are supported:
 
 In addition to the above arguments, the following attributes are exported:
 
-* created_at - The date the bucket has been created.
-* updated_at - The date the bucket has been updated.
-* type - The type of bucket.
+* ``created_at`` - The date the bucket has been created.
+* ``updated_at`` - The date the bucket has been updated.
+* ``type`` - The type of bucket.

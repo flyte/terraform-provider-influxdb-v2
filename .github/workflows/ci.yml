@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Setup influxdb
+        env: 
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
           source ./scripts/setup_influxdb.sh
           echo "::set-env name=INFLUXDB_V2_URL::$INFLUXDB_V2_URL"
