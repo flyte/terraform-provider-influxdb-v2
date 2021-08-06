@@ -1,4 +1,4 @@
-package influxdb-v2
+package influxdbv2
 
 import (
 	"context"

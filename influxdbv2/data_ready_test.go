@@ -1,4 +1,4 @@
-package influxdb-v2
+package influxdbv2
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
