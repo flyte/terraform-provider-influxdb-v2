@@ -7,5 +7,5 @@ import (
 
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
-		ProviderFunc: influxdb-v2.Provider})
+		ProviderFunc: influxdbv2.Provider})
 }
