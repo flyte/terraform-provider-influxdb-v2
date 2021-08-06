@@ -1,4 +1,4 @@
-package influxdbv2
+package influxdb-v2
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -18,7 +18,7 @@ func TestMain(m *testing.M) {
 }
 
 var testAccProviders = map[string]*schema.Provider{
-	"influxdbv2": Provider(),
+	"influxdb-v2": Provider(),
 }
 
 func testAccPreCheck(t *testing.T) {

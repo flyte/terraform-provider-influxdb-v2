@@ -1,23 +1,23 @@
 ---
-layout: "influxdbv2"
-page_title: "InfluxDB V2: influxdbv2_ready"
-sidebar_current: "docs-influxdbv2-datasource-ready"
+layout: "influxdb-v2"
+page_title: "InfluxDB V2: influxdb-v2_ready"
+sidebar_current: "docs-influxdb-v2-datasource-ready"
 description: |-
-  The influxdbv2_ready data source returns influxdb status.
+  The influxdb-v2_ready data source returns influxdb status.
 ---
 
-# influxdbv2\_ready
+# influxdb-v2\_ready
 
-The influxdbv2_ready data source retrieves influxdb instance status information.
+The influxdb-v2_ready data source retrieves influxdb instance status information.
 If the endpoint server is online, the function will output its URL, otherwise, the field will be empty.
 
 ## Example Usage
 
 ```hcl
-data "influxdbv2_ready" "test" {}
+data "influxdb-v2_ready" "test" {}
 
-output "influxdbv2_ready" {
-   value = data.influxdbv2_ready.test.output["url"]
+output "influxdb-v2_ready" {
+   value = data.influxdb-v2_ready.test.output["url"]
 }
 ```
 

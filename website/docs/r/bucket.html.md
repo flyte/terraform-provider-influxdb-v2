@@ -1,15 +1,15 @@
 ---
-layout: "influxdbv2"
-page_title: "InfluxDB V2: influxdbv2_bucket"
-sidebar_current: "docs-influxdbv2-resource-bucket"
+layout: "influxdb-v2"
+page_title: "InfluxDB V2: influxdb-v2_bucket"
+sidebar_current: "docs-influxdb-v2-resource-bucket"
 description: |-
-  The influxdbv2_authorization resource manages influxdb v2 buckets.
+  The influxdb-v2_authorization resource manages influxdb v2 buckets.
 ---
 
 ## Example Usage
 
 ```hcl
-resource "influxdbv2_bucket" "sensor_data" {
+resource "influxdb-v2_bucket" "sensor_data" {
     name = "Sensor Data"
     description = "A bucket for all my sensors"
     org_id = "94d518926178fea7"

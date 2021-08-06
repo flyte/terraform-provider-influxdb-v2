@@ -1,13 +1,13 @@
 terraform {
   required_providers {
-    influxdbv2 = {
-      source = "lancey-energy-storage/influxdbv2"
+    influxdb-v2 = {
+      source = "lancey-energy-storage/influxdb-v2"
       version = "0.1.0"
     }
   }
 }
 
-provider "influxdbv2" {
+provider "influxdb-v2" {
     // provider is configured with env vars
 }
 
@@ -15,13 +15,13 @@ variable "influx_org_id" {
   description = "Influxdb organization ID defined at the onboarding stage"
 }
 
-data "influxdbv2_ready" "status" {}
+data "influxdb-v2_ready" "status" {}
 
-output "influxdbv2_is_ready" {
-    value = data.influxdbv2_ready.status.output["url"]
+output "influxdb-v2_is_ready" {
+    value = data.influxdb-v2_ready.status.output["url"]
 }
 
-resource "influxdbv2_bucket" "temp" {
+resource "influxdb-v2_bucket" "temp" {
     description = "Temperature sensors data"
     name = "temp"
     org_id = var.influx_org_id
@@ -30,14 +30,14 @@ resource "influxdbv2_bucket" "temp" {
     }
 }
 
-resource "influxdbv2_authorization" "api" {
+resource "influxdb-v2_authorization" "api" {
     org_id = var.influx_org_id
     description = "api token"
     status = "active"
     permissions {
         action = "read"
         resource {
-            id = influxdbv2_bucket.temp.id
+            id = influxdb-v2_bucket.temp.id
             org_id = var.influx_org_id
             type = "buckets"
         }
@@ -45,7 +45,7 @@ resource "influxdbv2_authorization" "api" {
     permissions {
         action = "write"
         resource {
-            id = influxdbv2_bucket.temp.id
+            id = influxdb-v2_bucket.temp.id
             org_id = var.influx_org_id
             type = "buckets"
         }
@@ -53,5 +53,5 @@ resource "influxdbv2_authorization" "api" {
 }
 
 output "api_token" {
-    value = influxdbv2_authorization.api.token
+    value = influxdb-v2_authorization.api.token
 }
