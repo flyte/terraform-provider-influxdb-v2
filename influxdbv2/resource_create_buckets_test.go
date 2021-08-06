@@ -1,4 +1,4 @@
-package influxdbv2
+package influxdb-v2
 
 import (
 	"context"
@@ -19,29 +19,29 @@ func TestAccCreateBucket(t *testing.T) {
 			{
 				Config: testAccCreateBucket(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "description", "Acceptance test bucket"),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "name", "acctest"),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "rp", ""),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "retention_rules.0.every_seconds", "40"),
-					resource.TestCheckResourceAttrSet("influxdbv2_bucket.acctest", "created_at"),
-					resource.TestCheckResourceAttrSet("influxdbv2_bucket.acctest", "updated_at"),
-					testAccCheckUpdate("influxdbv2_bucket.acctest"),
-					resource.TestCheckResourceAttrSet("influxdbv2_bucket.acctest", "type"),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "description", "Acceptance test bucket"),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "name", "acctest"),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "rp", ""),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "retention_rules.0.every_seconds", "40"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_bucket.acctest", "created_at"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_bucket.acctest", "updated_at"),
+					testAccCheckUpdate("influxdb-v2_bucket.acctest"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_bucket.acctest", "type"),
 				),
 			},
 			{
 				Config: testAccUpdateBucket(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "description", "Acceptance test bucket 2"),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "name", "acctest"),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "rp", ""),
-					resource.TestCheckResourceAttr("influxdbv2_bucket.acctest", "retention_rules.0.every_seconds", "30"),
-					resource.TestCheckResourceAttrSet("influxdbv2_bucket.acctest", "created_at"),
-					resource.TestCheckResourceAttrSet("influxdbv2_bucket.acctest", "updated_at"),
-					testAccCheckUpdate("influxdbv2_bucket.acctest"),
-					resource.TestCheckResourceAttrSet("influxdbv2_bucket.acctest", "type"),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "description", "Acceptance test bucket 2"),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "name", "acctest"),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "rp", ""),
+					resource.TestCheckResourceAttr("influxdb-v2_bucket.acctest", "retention_rules.0.every_seconds", "30"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_bucket.acctest", "created_at"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_bucket.acctest", "updated_at"),
+					testAccCheckUpdate("influxdb-v2_bucket.acctest"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_bucket.acctest", "type"),
 				),
 			},
 		},
@@ -68,7 +68,7 @@ func testAccCheckUpdate(n string) resource.TestCheckFunc {
 
 func testAccCreateBucket() string {
 	return `
-resource "influxdbv2_bucket" "acctest" {
+resource "influxdb-v2_bucket" "acctest" {
     description = "Acceptance test bucket" 
     name = "acctest" 
     org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
@@ -81,7 +81,7 @@ resource "influxdbv2_bucket" "acctest" {
 
 func testAccUpdateBucket() string {
 	return `
-resource "influxdbv2_bucket" "acctest" {
+resource "influxdb-v2_bucket" "acctest" {
     description = "Acceptance test bucket 2" 
     name = "acctest" 
     org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"

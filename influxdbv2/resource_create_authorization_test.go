@@ -1,4 +1,4 @@
-package influxdbv2
+package influxdb-v2
 
 import (
 	"context"
@@ -19,29 +19,29 @@ func TestAccAuthorization(t *testing.T) {
 			{
 				Config: testAccCreateAuthorization(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "description", "Acceptance test token"),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "status", "inactive"),
-					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "user_id"),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "user_org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
-					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "token"),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "description", "Acceptance test token"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "status", "inactive"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_authorization.acctest", "user_id"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "user_org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttrSet("influxdb-v2_authorization.acctest", "token"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
 					// permissions is a complex array... we'll just check it has the correct length
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "permissions.#", "2"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "permissions.#", "2"),
 				),
 			},
 			{
 				Config: testAccUpdateAuthorization(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "description", "Acceptance test token 2"),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "status", "active"),
-					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "user_id"),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "user_org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
-					resource.TestCheckResourceAttrSet("influxdbv2_authorization.acctest", "token"),
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "description", "Acceptance test token 2"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "status", "active"),
+					resource.TestCheckResourceAttrSet("influxdb-v2_authorization.acctest", "user_id"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "user_org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
+					resource.TestCheckResourceAttrSet("influxdb-v2_authorization.acctest", "token"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "org_id", os.Getenv("INFLUXDB_V2_ORG_ID")),
 					// permissions is a complex array... we'll just check it has the correct length
-					resource.TestCheckResourceAttr("influxdbv2_authorization.acctest", "permissions.#", "1"),
+					resource.TestCheckResourceAttr("influxdb-v2_authorization.acctest", "permissions.#", "1"),
 				),
 			},
 		},
@@ -50,7 +50,7 @@ func TestAccAuthorization(t *testing.T) {
 
 func testAccCreateAuthorization() string {
 	return `
-resource "influxdbv2_authorization" "acctest" {
+resource "influxdb-v2_authorization" "acctest" {
 	org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
     description = "Acceptance test token"
     status = "inactive"
@@ -76,7 +76,7 @@ resource "influxdbv2_authorization" "acctest" {
 
 func testAccUpdateAuthorization() string {
 	return `
-resource "influxdbv2_authorization" "acctest" {
+resource "influxdb-v2_authorization" "acctest" {
 	org_id = "` + os.Getenv("INFLUXDB_V2_ORG_ID") + `"
     description = "Acceptance test token 2"
     status = "active"

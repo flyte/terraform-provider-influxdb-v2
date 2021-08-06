@@ -1,15 +1,15 @@
 ---
-layout: "influxdbv2"
-page_title: "InfluxDB V2: influxdbv2_authorization"
-sidebar_current: "docs-influxdbv2-resource-authorization"
+layout: "influxdb-v2"
+page_title: "InfluxDB V2: influxdb-v2_authorization"
+sidebar_current: "docs-influxdb-v2-resource-authorization"
 description: |-
-  The influxdbv2_authorization resource manages influxdb v2 authorizations.
+  The influxdb-v2_authorization resource manages influxdb v2 authorizations.
 ---
 
 ## Example Usage
 
 ```hcl
-resource "influxdbv2_authorization" "my_service" {
+resource "influxdb-v2_authorization" "my_service" {
     org_id = <related organization id>
         description = "a token for my service"
         status = "active"

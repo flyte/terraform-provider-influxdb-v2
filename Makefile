@@ -1,6 +1,6 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
-PKG_NAME=influxdbv2
+PKG_NAME=influxdb-v2
 
 default: build
 
@@ -11,7 +11,7 @@ build: fmtcheck
 	go install
 	
 clean:
-	@rm terraform-provider-influxdbv2
+	@rm terraform-provider-influxdb-v2
 	@go clean -testcache
 
 test: fmtcheck

@@ -1,11 +1,11 @@
 terraform {
   required_providers {
-    influxdbv2-onboarding = {
-      source = "lancey-energy-storage/influxdbv2-onboarding"
+    influxdb-v2-onboarding = {
+      source = "lancey-energy-storage/influxdb-v2-onboarding"
       version = "0.2.0"
     }
-    influxdbv2 = {
-      source = "lancey-energy-storage/influxdbv2"
+    influxdb-v2 = {
+      source = "lancey-energy-storage/influxdb-v2"
       version = "0.1.0"
     }
   }
@@ -13,11 +13,11 @@ terraform {
 
 # Onboarding
 
-provider "influxdbv2-onboarding" {
+provider "influxdb-v2-onboarding" {
     url = "http://localhost:9999"
 }
 
-resource "influxdbv2-onboarding_setup" "setup" {
+resource "influxdb-v2-onboarding_setup" "setup" {
     username = "joe"
     password = "changeme"
     bucket = "defaultbucket"
@@ -25,50 +25,50 @@ resource "influxdbv2-onboarding_setup" "setup" {
     retention_period = 4
 }
 
-# Influxdbv2 provider
+# influxdb-v2 provider
 
-provider "influxdbv2" {
+provider "influxdb-v2" {
     url = "http://localhost:9999/"
-    token = influxdbv2-onboarding_setup.setup.token
+    token = influxdb-v2-onboarding_setup.setup.token
 }
 
-data "influxdbv2_ready" "status" {}
+data "influxdb-v2_ready" "status" {}
 
-output "influxdbv2_is_ready" {
-    value = data.influxdbv2_ready.status.output["url"]
+output "influxdb-v2_is_ready" {
+    value = data.influxdb-v2_ready.status.output["url"]
 }
 
-resource "influxdbv2_bucket" "temp" {
+resource "influxdb-v2_bucket" "temp" {
     description = "Temperature sensors data"
     name = "temp"
-    org_id = influxdbv2-onboarding_setup.setup.org_id
+    org_id = influxdb-v2-onboarding_setup.setup.org_id
     retention_rules {
         every_seconds = 3600*24*30
     }
 }
 
-resource "influxdbv2_authorization" "api" {
-    org_id = influxdbv2-onboarding_setup.setup.org_id
+resource "influxdb-v2_authorization" "api" {
+    org_id = influxdb-v2-onboarding_setup.setup.org_id
     description = "api token"
     status = "active"
     permissions {
         action = "read"
         resource {
-            id = influxdbv2_bucket.temp.id
-            org_id = influxdbv2-onboarding_setup.setup.org_id
+            id = influxdb-v2_bucket.temp.id
+            org_id = influxdb-v2-onboarding_setup.setup.org_id
             type = "buckets"
         }
     }
     permissions {
         action = "write"
         resource {
-            id = influxdbv2_bucket.temp.id
-            org_id = influxdbv2-onboarding_setup.setup.org_id
+            id = influxdb-v2_bucket.temp.id
+            org_id = influxdb-v2-onboarding_setup.setup.org_id
             type = "buckets"
         }
     }
 }
 
 output "api_token" {
-    value = influxdbv2_authorization.api.token
+    value = influxdb-v2_authorization.api.token
 }

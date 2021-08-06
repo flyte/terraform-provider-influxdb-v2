@@ -10,7 +10,7 @@ The InfluxDB v2 provider allows Terraform to manage
 #### Terraform 0.12.x
 
 Download the release and extract it to (on linux):  
-`~/.terraform.d/plugins/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
+`~/.terraform.d/plugins/linux_amd64/terraform-provider-influxdb-v2_v0.1.0`
 
 #### Terraform 0.13.x
 
@@ -19,8 +19,8 @@ Add this snippet to your code:
 ```hcl
 terraform {
   required_providers {
-    influxdbv2 = {
-      source = "lancey-energy-storage/influxdbv2"
+    influxdb-v2 = {
+      source = "lancey-energy-storage/influxdb-v2"
       version = "0.1.0"
     }
   }
@@ -28,12 +28,12 @@ terraform {
 ```
 
 Until the provider is available on registry.terraform.io, you need to manually download the release and extract it to, eg (on linux):   
-`~/.terraform.d/plugins/registry.terraform.io/lancey-energy-storage/influxdbv2/0.1.0/linux_amd64/terraform-provider-influxdbv2_v0.1.0`
+`~/.terraform.d/plugins/registry.terraform.io/lancey-energy-storage/influxdb-v2/0.1.0/linux_amd64/terraform-provider-influxdb-v2_v0.1.0`
 
 ### Initialize the provider
 
 ```hcl
-provider "influxdbv2" {
+provider "influxdb-v2" {
   url = "http://influxdb.example.com:9999"
   token = "influxdbToken"
 }
@@ -57,7 +57,7 @@ Influxdb v2 api documentation is available [here](https://v2.docs.influxdata.com
 
 #### Data sources
 
-* ready (status of the influxdbv2 instance)
+* ready (status of the influxdb-v2 instance)
 
 #### Resources
 
@@ -106,5 +106,5 @@ make stop-influx
 ### Build
 
 ```bash
-go build -o terraform-provider-influxdbv2
+go build -o terraform-provider-influxdb-v2
 ```

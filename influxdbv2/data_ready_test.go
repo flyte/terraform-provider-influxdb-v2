@@ -1,4 +1,4 @@
-package influxdbv2
+package influxdb-v2
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -19,7 +19,7 @@ func TestAccReady(t *testing.T) {
 			{
 				Config: testAccReady(),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("data.influxdbv2_ready.acctest", "output.url", currentUrl),
+					resource.TestCheckResourceAttr("data.influxdb-v2_ready.acctest", "output.url", currentUrl),
 				),
 			},
 		},
@@ -28,5 +28,5 @@ func TestAccReady(t *testing.T) {
 
 func testAccReady() string {
 	return `
-data "influxdbv2_ready" "acctest" {}`
+data "influxdb-v2_ready" "acctest" {}`
 }

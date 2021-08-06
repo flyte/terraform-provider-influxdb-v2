@@ -1,4 +1,4 @@
-package influxdbv2
+package influxdb-v2
 
 import (
 	"context"
@@ -10,11 +10,11 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"influxdbv2_ready": DataReady(),
+			"influxdb-v2_ready": DataReady(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"influxdbv2_bucket":        ResourceBucket(),
-			"influxdbv2_authorization": ResourceAuthorization(),
+			"influxdb-v2_bucket":        ResourceBucket(),
+			"influxdb-v2_authorization": ResourceAuthorization(),
 		},
 		Schema: map[string]*schema.Schema{
 			"url": {

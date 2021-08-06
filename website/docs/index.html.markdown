@@ -1,7 +1,7 @@
 ---
-layout: "influxdbv2"
+layout: "influxdb-v2"
 page_title: "Provider: InfluxDB V2"
-sidebar_current: "docs-influxdbv2-index"
+sidebar_current: "docs-influxdb-v2-index"
 description: |-
   The InfluxDB V2 provider configures buckets, tokens, etc on an InfluxDB V2 server.
 ---
@@ -24,7 +24,7 @@ The provider configuration block accepts the following arguments:
 ## Example Usage
 
 ```hcl
-provider "influxdbv2" {
+provider "influxdb-v2" {
   url = "http://influxdb.example.com:9999"
   token = "influxdbToken"
 }
