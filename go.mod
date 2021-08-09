@@ -6,7 +6,6 @@ require (
 	cloud.google.com/go v0.64.0 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/aws/aws-sdk-go v1.34.10 // indirect
-	github.com/deepmap/oapi-codegen v1.6.0 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/go-test/deep v1.0.7 // indirect
 	github.com/google/go-cmp v0.5.2 // indirect
@@ -19,6 +18,7 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.1
 	github.com/hashicorp/yamux v0.0.0-20200609203250-aecfd211c9ce // indirect
 	github.com/influxdata/influxdb-client-go v1.4.0
+	github.com/influxdata/influxdb-client-go/v2 v2.4.0
 	github.com/jhump/protoreflect v1.7.0 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
