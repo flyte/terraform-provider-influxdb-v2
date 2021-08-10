@@ -1,12 +1,10 @@
 terraform {
   required_providers {
     influxdb-v2-onboarding = {
-      source = "lancey.fr/influx/influxdb-v2-onboarding"
-      version = "0.2.0"
+      source = "lancey-energy-storage/influxdb-v2-onboarding"
     }
     influxdb-v2 = {
-      source = "lancey.fr/influx/influxdb-v2"
-      version = "0.3.0"
+      source = "lancey-energy-storage/influxdb-v2"
     }
   }
 }

@@ -17,7 +17,6 @@ require (
 	github.com/hashicorp/terraform-json v0.6.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.1
 	github.com/hashicorp/yamux v0.0.0-20200609203250-aecfd211c9ce // indirect
-	github.com/influxdata/influxdb-client-go v1.4.0
 	github.com/influxdata/influxdb-client-go/v2 v2.4.0
 	github.com/jhump/protoreflect v1.7.0 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
