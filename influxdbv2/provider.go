@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/influxdata/influxdb-client-go"
+	"github.com/influxdata/influxdb-client-go/v2"
 )
 
 func Provider() *schema.Provider {
@@ -20,7 +20,7 @@ func Provider() *schema.Provider {
 			"url": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_URL", "http://localhost:9999"),
+				DefaultFunc: schema.EnvDefaultFunc("INFLUXDB_V2_URL", "http://localhost:8086"),
 			},
 			"token": {
 				Type:        schema.TypeString,

@@ -42,7 +42,7 @@ The following arguments are supported:
     * ``resource`` (Required) Permission resource
         * ``id`` (Required) ID of the resource to which the permission is linked
         * ``orgID`` (Required) Organization ID to link to.
-        * ``type`` (Required) The type of authorization, can be "authorizations" "buckets" "dashboards" "orgs" "sources" "tasks" "telegrafs" "users" "variables" "scrapers" "secrets" "labels" "views" "documents" "notificationRules" "notificationEndpoints" "checks" "dbrp"
+        * ``type`` (Required) The type of authorization, can be `authorizations` `buckets` `dashboards` `orgs` `sources` `tasks` `telegrafs` `users` `variables` `scrapers` `secrets` `labels` `views` `documents` `notificationRules` `notificationEndpoints` `checks` `dbrp`
         * ``name`` (Optional) Name of the resource 
         * ``org`` (Optional) Name of the organization with orgID.
 * ``status`` (Optional) Status of the authorization, can be "active" or "inactive" - Default "active"
