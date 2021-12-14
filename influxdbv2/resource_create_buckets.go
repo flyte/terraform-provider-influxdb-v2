@@ -3,8 +3,9 @@ package influxdbv2
 import (
 	"context"
 	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/influxdata/influxdb-client-go/v2"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/domain"
 )
 
@@ -161,7 +162,7 @@ func getRetentionRules(input interface{}) (domain.RetentionRules, error) {
 	for _, retentionRule := range retentionRulesSet {
 		rr, ok := retentionRule.(map[string]interface{})
 		if ok {
-			each := domain.RetentionRule{EverySeconds: rr["every_seconds"].(int)}
+			each := domain.RetentionRule{EverySeconds: int64(rr["every_seconds"].(int))}
 			result = append(result, each)
 		}
 	}
