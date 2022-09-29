@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/.env bash
 
 # Check gofmt
 echo "==> Checking that code complies with gofmt requirements..."

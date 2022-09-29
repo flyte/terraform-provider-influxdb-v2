@@ -1,14 +1,14 @@
 terraform {
   required_providers {
     influxdb-v2 = {
-      source = "lancey-energy-storage/influxdb-v2"
+      source = "hasanhakkaev/influxdb-v2"
       version = "0.1.0"
     }
   }
 }
 
 provider "influxdb-v2" {
-    // provider is configured with env vars
+    // provider is configured with .env vars
 }
 
 variable "influx_org_id" {

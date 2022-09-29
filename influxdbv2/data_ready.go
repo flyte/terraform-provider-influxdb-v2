@@ -3,9 +3,10 @@ package influxdbv2
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/influxdata/influxdb-client-go/v2"
 	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
 func DataReady() *schema.Resource {
@@ -22,11 +23,11 @@ func DataReady() *schema.Resource {
 
 func DataGetReady(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(influxdb2.Client)
-	bool, err := influx.Ready(context.Background())
+	ready, err := influx.Ready(context.Background())
 	if err != nil {
 		return fmt.Errorf("server is not ready: %v", err)
 	}
-	if bool {
+	if ready {
 		log.Printf("Server is ready !")
 	}
 
@@ -37,7 +38,10 @@ func DataGetReady(d *schema.ResourceData, meta interface{}) error {
 	id := ""
 	id = influx.ServerURL()
 	d.SetId(id)
-	d.Set("output", output)
+	err = d.Set("output", output)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

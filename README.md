@@ -10,7 +10,7 @@ The InfluxDB v2 provider allows Terraform to manage
     cd examples
     mkdir -p terraform.d/plugins/lancey.fr/influx/influxdb-v2/0.3.0/linux_amd64/
     cd terraform.d/plugins/lancey.fr/influx/influxdb-v2/0.3.0/linux_amd64/
-    wget https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2/releases/download/v0.3.0/terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz
+    wget https://github.com/hasanhakkaev/terraform-provider-influxdb-v2/releases/download/v0.3.0/terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz
     tar xvzf terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz && rm -rf terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz
     filename=$(echo terraform-provider-influxdb-v2*)
     chmod +x $filename
@@ -49,7 +49,7 @@ The provider configuration block accepts the following arguments:
 A token can be acquired by executing the *onboarding* process, which is possible using:
 
 * influx GUI, API or command line (manually)
-* the dedicated provider (terraform) available [here](https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2-onboarding)
+* the dedicated provider (terraform) available [here](https://github.com/hasanhakkaev/terraform-provider-influxdb-v2-onboarding)
 
 ### Available functionalities
 

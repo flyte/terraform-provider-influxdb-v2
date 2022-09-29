@@ -3,8 +3,9 @@ package influxdbv2
 import (
 	"context"
 	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/influxdata/influxdb-client-go/v2"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/domain"
 )
 
@@ -82,10 +83,7 @@ func ResourceAuthorization() *schema.Resource {
 
 func resourceAuthorizationCreate(d *schema.ResourceData, meta interface{}) error {
 	influx := meta.(influxdb2.Client)
-	permissions, err := getPermissions(d.Get("permissions"))
-	if err != nil {
-		return fmt.Errorf("error getting permissions: %v", err)
-	}
+	permissions := getPermissions(d.Get("permissions"))
 	orgId := d.Get("org_id").(string)
 	description := d.Get("description").(string)
 	status := domain.AuthorizationUpdateRequestStatus(d.Get("status").(string))
@@ -125,14 +123,24 @@ func resourceAuthorizationRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("error getting authorization: %v", err)
 	}
-	authorizations, err := getAuthorizationsById(result, d.Id())
+	authorizations := getAuthorizationsById(result, d.Id())
+
+	err = d.Set("status", authorizations.Status)
 	if err != nil {
-		return fmt.Errorf("error reading authorization: %v", err)
+		return err
 	}
-	d.Set("status", authorizations.Status)
-	d.Set("user_id", authorizations.UserID)
-	d.Set("user_org_id", authorizations.OrgID)
-	d.Set("token", authorizations.Token)
+	err = d.Set("user_id", authorizations.UserID)
+	if err != nil {
+		return err
+	}
+	err = d.Set("user_org_id", authorizations.OrgID)
+	if err != nil {
+		return err
+	}
+	err = d.Set("token", authorizations.Token)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -150,7 +158,7 @@ func resourceAuthorizationUpdate(d *schema.ResourceData, meta interface{}) error
 	return resourceAuthorizationRead(d, meta)
 }
 
-func getPermissions(input interface{}) ([]domain.Permission, error) {
+func getPermissions(input interface{}) []domain.Permission {
 	result := []domain.Permission{}
 	permissionsSet := input.(*schema.Set).List()
 	for _, permission := range permissionsSet {
@@ -178,15 +186,15 @@ func getPermissions(input interface{}) ([]domain.Permission, error) {
 			}
 		}
 	}
-	return result, nil
+	return result
 }
 
-func getAuthorizationsById(input *[]domain.Authorization, id string) (domain.Authorization, error) {
+func getAuthorizationsById(input *[]domain.Authorization, id string) domain.Authorization {
 	result := domain.Authorization{}
 	for _, authorization := range *input {
 		if *authorization.Id == id {
 			result = authorization
 		}
 	}
-	return result, nil
+	return result
 }

@@ -3,11 +3,12 @@ package influxdbv2
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/influxdata/influxdb-client-go/v2"
 	"os"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
 func TestAccAuthorization(t *testing.T) {

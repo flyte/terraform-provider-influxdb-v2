@@ -33,4 +33,4 @@ provider "influxdb-v2" {
 A token can be acquired by executing the *onboarding* process, which is possible using:
 
 * influx GUI, API or command line (manually)
-* the dedicated provider (terraform) available [here](https://github.com/lancey-energy-storage/terraform-provider-influxdb-v2-onboarding)
+* the dedicated provider (terraform) available [here](https://github.com/hasanhakkaev/terraform-provider-influxdb-v2-onboarding)

@@ -1,11 +1,36 @@
-# Build output
-terraform-provider-influxdb-v2
-terraform-provider-influxdb-v2
-
-# Examples
-.terraform/
+*.dll
+*.exe
+.DS_Store
+example.tf
+terraform.tfplan
 terraform.tfstate
-terraform.tfstate.backup
-.terraform*
-terraform.d/
+bin/
+dist/
+modules-dev/
+/pkg/
+website/.vagrant
+website/.bundle
+website/build
+website/node_modules
+.vagrant/
+*.backup
+./*.tfstate
+.terraform/
+*.log
+*.bak
+*~
+.*.swp
 .idea
+*.iml
+*.test
+*.iml
+*.env
+website/vendor
+.task/
+vendor/
+# Test exclusions
+!command/test-fixtures/**/*.tfstate
+!command/test-fixtures/**/.terraform/
+
+# Keep windows files with windows line endings
+*.winfile eol=crlf

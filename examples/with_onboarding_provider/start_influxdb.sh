@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/.env bash
 
 echo "launching influx..."
 docker run -d --name tf_example_influxdb -p 8086:8086 quay.io/influxdb/influxdb:v2.0.7
