@@ -28,5 +28,5 @@ jobs:
 
       - name: Run unit tests
         uses: arduino/setup-task@v1
-        with:
-          args: test
+        run : task test
+
