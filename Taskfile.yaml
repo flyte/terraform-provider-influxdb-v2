@@ -6,7 +6,7 @@ vars:
   BINARY_FOLDER: bin
   BINARY_NAME: terraform-provider-influxdb-v2
   GOLANGCI_LINT_VERSION: v1.49.0
-  VERSION: v0.4.1
+  VERSION: v0.4.2
 
 dotenv: ['.env']
 
