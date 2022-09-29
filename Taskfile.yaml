@@ -38,13 +38,6 @@ tasks:
     cmds:
       - go test -tags=unit -v -cover ./...
 
-  testacc:
-    desc: Run acceptance tests
-    env:
-      TF_ACC: true
-    cmds:
-      - go test -tags=integration -v -cover -timeout 2h ./...
-
   docs:
     desc: Update the generated documentation
     cmds:

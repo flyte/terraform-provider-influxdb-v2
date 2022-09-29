@@ -26,11 +26,7 @@ jobs:
           echo "::set-env name=INFLUXDB_V2_BUCKET_ID::$INFLUXDB_V2_BUCKET_ID"
           echo "::set-env name=INFLUXDB_V2_ORG_ID::$INFLUXDB_V2_ORG_ID"
 
-      - name: Go fmt
-        run: make fmt
-
       - name: Run unit tests
-        run: make test
-
-      - name: Run acceptance tests
-        run: make testacc
+        uses: arduino/setup-task@v1
+        with:
+          args: test
