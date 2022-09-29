@@ -1,9 +1,9 @@
 ---
 layout: "influxdb-v2"
 page_title: "InfluxDB V2: influxdb-organization"
-sidebar_current: "docs-influxdb-v2-resource-authorization"
+sidebar_current: "docs-influxdb-v2-resource-organization"
 description: |-
-The influxdb-organization resource manages influxdb v2 authorizations.
+The influxdb-organization resource manages influxdb v2 organizations.
 ---
 
 ## Example Usage
