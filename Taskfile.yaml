@@ -4,9 +4,10 @@ version: '3'
 
 vars:
   BINARY_FOLDER: bin
-  BINARY_NAME: terraform-provider-influxdb-v2
+  NAME: influxdb-v2
   GOLANGCI_LINT_VERSION: v1.49.0
-  VERSION: v0.4.2
+  VERSION: v0.4.4
+  NAMESPACE: hasanhakkaev
 
 dotenv: ['.env']
 
@@ -20,18 +21,17 @@ tasks:
   build:
     desc: Build the provider binary
     cmds:
-      - go build -v -o {{.BINARY_FOLDER}}/{{.BINARY_NAME}}_{{.VERSION}}
+      - go build -v -o {{.BINARY_FOLDER}}/terraform-provider-{{.NAME}}_{{.VERSION}}
     sources:
       - "**/*.go"
       - go.mod
       - go.sum
     generates:
-      - '{{.BINARY_FOLDER}}/{{.BINARY_NAME}}_{{.VERSION}}'
+      - ' go build -v -o {{.BINARY_FOLDER}}/terraform-provider-{{.NAME}}_{{.VERSION}}'
 
-  install:
+  dev:
     deps:
       - install-dev-override
-      - build
 
   test:
     desc: Run unit tests
@@ -74,17 +74,16 @@ tasks:
   install-dev-override:
     desc: Set up an override allowing a local version of the provider to be used
     cmds:
-      - cmd: |
-          cat << EOF > ~/.terraformrc
-          provider_installation {
-            dev_overrides {
-              "registry.terraform.io/hasanhakkaev/influxdb-v2" = "$(pwd)/{{.BINARY_FOLDER}}"
-            }
-            direct {}
-          }
-          EOF
-    status:
-      - cat ~/.terraformrc | grep "$(pwd)/{{.BINARY_FOLDER}}"
+      - mkdir -p {{.INSTALL_PATH}}\terraform-provider-{{.NAME}}_{{.VERSION}}_!
+      #- go build -v -o {{.INSTALL_PATH}}\terraform-provider-{{.NAME}}_{{.VERSION}}
+    vars:
+      INSTALL_PATH: '{{if eq OS "windows"}}
+      %APPDATA%\terraform.d\plugins\registry.terraform.io\{{.NAMESPACE}}\{{.NAME}}\{{.VERSION}}\{{OS}}_{{ARCH}}
+      {{else if eq OS "darwin" }}
+      unix-command
+      {{else}}
+      linux-command
+      {{end}}'
 
   uninstall-dev-override:
     desc: Remove any local terraform overrides and binaries for local development
