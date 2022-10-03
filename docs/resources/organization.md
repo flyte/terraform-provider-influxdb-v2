@@ -21,10 +21,18 @@ The following arguments are supported:
 
 * ``name`` (Required) The organization name
 * ``description`` (Required) A short description for your organization
-    
+
 ## Attributes Reference
 
 In addition to the above arguments, the following attributes are exported:
 
 * ``id`` - The organization ID which is created
 
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+terraform import influxdb-v2_organization.example_organization <ORG_ID>
+```

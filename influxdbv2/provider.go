@@ -11,7 +11,8 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"influxdb-v2_ready": DataReady(),
+			"influxdb-v2_ready":        DataReady(),
+			"influxdb-v2_organization": dataSourceOrganization(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"influxdb-v2_bucket":        ResourceBucket(),
