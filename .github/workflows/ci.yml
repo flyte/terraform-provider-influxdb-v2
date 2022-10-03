@@ -27,6 +27,7 @@ jobs:
           echo "::set-env name=INFLUXDB_V2_TOKEN::$INFLUXDB_V2_TOKEN"
           echo "::set-env name=INFLUXDB_V2_BUCKET_ID::$INFLUXDB_V2_BUCKET_ID"
           echo "::set-env name=INFLUXDB_V2_ORG_ID::$INFLUXDB_V2_ORG_ID"
+          echo "::set-env name=TF_ACC::1"
 
       - name: Run unit tests
         run : task test
