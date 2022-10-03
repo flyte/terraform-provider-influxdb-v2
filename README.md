@@ -5,16 +5,6 @@ The InfluxDB v2 provider allows Terraform to manage
 
 ## How to use
 
-### Download the provider
-
-    cd examples
-    mkdir -p terraform.d/plugins/lancey.fr/influx/influxdb-v2/0.3.0/linux_amd64/
-    cd terraform.d/plugins/lancey.fr/influx/influxdb-v2/0.3.0/linux_amd64/
-    wget https://github.com/hasanhakkaev/terraform-provider-influxdb-v2/releases/download/v0.3.0/terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz
-    tar xvzf terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz && rm -rf terraform-provider-influxdb-v2_v0.3.0-v0.3.0-linux-amd64.tar.gz
-    filename=$(echo terraform-provider-influxdb-v2*)
-    chmod +x $filename
-    mv "$filename" "${filename%.*}"
 
 #### Terraform 0.13.x
 
@@ -24,8 +14,8 @@ Add this snippet to your code:
 terraform {
   required_providers {
     influxdb-v2 = {
-      source = "lancey.fr/influx/influxdb-v2"
-      version = "0.3.0"
+      source = "hasanhakkaev/influxdb-v2"
+      version = "0.4.4"
     }
   }
 }
@@ -49,7 +39,6 @@ The provider configuration block accepts the following arguments:
 A token can be acquired by executing the *onboarding* process, which is possible using:
 
 * influx GUI, API or command line (manually)
-* the dedicated provider (terraform) available [here](https://github.com/hasanhakkaev/terraform-provider-influxdb-v2-onboarding)
 
 ### Available functionalities
 
@@ -59,53 +48,53 @@ Influxdb v2 api documentation is available [here](https://v2.docs.influxdata.com
 #### Data sources
 
 * ready (status of the influxdb-v2 instance)
+* organization (get an organization by name)
 
 #### Resources
 
 * bucket
-
 * authorization (tokens)
+* organization
 
 ### Examples
 
 Find examples in `examples/`. To run them:
 
+
+
+## Development
+### Requirements
+    
+    TaskFile (https://taskfile.dev/)
+    Precommit framework (https://pre-commit.com/)
+    Docker (https://www.docker.com/)
+    Go 1.16^ (https://golang.org/doc/install)
+    Terraform 0.13^ (https://www.terraform.io/downloads.html)
+    InfluxDB 2.0^ (https://docs.influxdata.com/influxdb/v2.0/install/)
+
 ```bash
-source ./start_influxdb.sh
-terraform init
-terraform apply
-./stop_influxdb.sh
+# Run Task init to download dependencies
+task init
 ```
-
-## Dev
-
-In case you need to update the influx client, run `go get github.com/influxdata/influxdb-client-go@<commit sha>`.  
-Also don't forget to run `go mod tidy` from time to time to remove useless dependencies.
 
 ### Test
 
-First execute this command to check fmt requirements:
- 
+First execute this command to lint and format the code:
+
 ```bash
-make fmt
+task lint
 ```
 
-Then execute this command to run the provider unit tests:
+To run acceptance tests, execute these commands (requires `docker` and `jq`): 
 
 ```bash
-make test
-```
-
-And finally to run acceptance tests, execute these commands (requires `docker` and `jq`): 
-
-```bash
-source ./scripts/setup_influxdb.sh
-make testacc
-make stop-influx
+task start-influx
+task test
+task stop-influx
 ```
 
 ### Build
 
 ```bash
-go build -o terraform-provider-influxdb-v2
+task build
 ```

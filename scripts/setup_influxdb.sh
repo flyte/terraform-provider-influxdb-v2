@@ -16,4 +16,5 @@ export INFLUXDB_V2_URL="http://localhost:8086"
 export INFLUXDB_V2_TOKEN="$token"
 export INFLUXDB_V2_BUCKET_ID="$bucketid"
 export INFLUXDB_V2_ORG_ID="$orgid"
+export TF_ACC=1
 

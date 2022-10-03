@@ -28,16 +28,10 @@ tasks:
       - go.sum
     generates:
       - ' go build -v -o {{.BINARY_FOLDER}}/terraform-provider-{{.NAME}}_{{.VERSION}}'
-
-  dev:
-    deps:
-      - install-dev-override
-
   test:
     desc: Run unit tests
     cmds:
       - go test -tags=unit -v -cover ./...
-
   docs:
     desc: Update the generated documentation
     cmds:
@@ -50,7 +44,6 @@ tasks:
       - go.sum
     generates:
       - docs/**/*.md
-
   lint:
     desc: Run linters
     deps:
@@ -70,23 +63,14 @@ tasks:
     status:
       - which golangci-lint
       - golangci-lint version | grep {{.GOLANGCI_LINT_VERSION}}
-
-  install-dev-override:
-    desc: Set up an override allowing a local version of the provider to be used
+  start-influx:
+    desc: Start InfluxDB
     cmds:
-      - mkdir -p {{.INSTALL_PATH}}\terraform-provider-{{.NAME}}_{{.VERSION}}_!
-      #- go build -v -o {{.INSTALL_PATH}}\terraform-provider-{{.NAME}}_{{.VERSION}}
-    vars:
-      INSTALL_PATH: '{{if eq OS "windows"}}
-      %APPDATA%\terraform.d\plugins\registry.terraform.io\{{.NAMESPACE}}\{{.NAME}}\{{.VERSION}}\{{OS}}_{{ARCH}}
-      {{else if eq OS "darwin" }}
-      unix-command
-      {{else}}
-      linux-command
-      {{end}}'
-
-  uninstall-dev-override:
-    desc: Remove any local terraform overrides and binaries for local development
+      - ./scripts/setup-influxdb.sh
+    status:
+      - while ! $(curl -sS 'http://localhost:8086/ready' | grep -q ready); do echo 'Waiting for influx...'; sleep 1; done
+  stop-influx:
+    desc: Stop InfluxDB
     cmds:
-      - rm ~/.terraformrc
-      - rm -rf ./bin
+        - docker stop tf_acc_tests_influxdb
+        - docker rm tf_acc_tests_influxdb
