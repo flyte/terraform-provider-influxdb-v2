@@ -74,8 +74,9 @@ func ResourceAuthorization() *schema.Resource {
 				Computed: true,
 			},
 			"token": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:      schema.TypeString,
+				Computed:  true,
+				Sensitive: true,
 			},
 		},
 	}
@@ -101,6 +102,10 @@ func resourceAuthorizationCreate(d *schema.ResourceData, meta interface{}) error
 		return fmt.Errorf("error creating authorization: %e", err)
 	}
 	d.SetId(*result.Id)
+	err = d.Set("token", *result.Token)
+	if err != nil {
+		return err
+	}
 	return resourceAuthorizationRead(d, meta)
 }
 
@@ -137,9 +142,11 @@ func resourceAuthorizationRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return err
 	}
-	err = d.Set("token", authorizations.Token)
-	if err != nil {
-		return err
+	if *authorizations.Token != "redacted" {
+		err = d.Set("token", authorizations.Token)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

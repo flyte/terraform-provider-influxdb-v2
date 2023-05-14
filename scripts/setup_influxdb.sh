@@ -1,7 +1,7 @@
-#!/usr/bin/.env bash
+#!/usr/bin/env bash
 
 echo "1) launching influx"
-docker run -d --name tf_acc_tests_influxdb -p 8086:8086 influxdb:2.0.7
+docker run -d --name tf_acc_tests_influxdb -p 8086:8086 influxdb:2.7.1-alpine
 while ! $(curl -sS 'http://localhost:8086/ready' | grep -q ready); do echo 'Waiting for influx...'; sleep 1; done
 
 echo "2) onboarding"

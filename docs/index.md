@@ -15,7 +15,7 @@ description: |-
 ```terraform
 provider "influxdb-v2" {
   url  = "http://localhost:8086"    # changeme
-  token = "super-secret-admin-token" # changeme
+  token = "WLCq15HS_zugineJalPUqxTxxBKK7IluEseKR0rD3-2CfHBdS0BguLHGEaXRnJ2p080EdTsx9yKq1kFnLnSaxA==" # changeme
 }
 ```
 

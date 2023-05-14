@@ -5,8 +5,8 @@ version: '3'
 vars:
   BINARY_FOLDER: bin
   NAME: influxdb-v2
-  GOLANGCI_LINT_VERSION: v1.49.0
-  VERSION: v0.4.4
+  GOLANGCI_LINT_VERSION: v1.52.2
+  VERSION: v0.4.5
   NAMESPACE: hasanhakkaev
 
 dotenv: ['.env']
@@ -66,9 +66,7 @@ tasks:
   start-influx:
     desc: Start InfluxDB
     cmds:
-      - ./scripts/setup-influxdb.sh
-    status:
-      - while ! $(curl -sS 'http://localhost:8086/ready' | grep -q ready); do echo 'Waiting for influx...'; sleep 1; done
+      - ./scripts/setup_influxdb.sh
   stop-influx:
     desc: Stop InfluxDB
     cmds:

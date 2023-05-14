@@ -15,12 +15,11 @@ func dataSourceOrganization() *schema.Resource {
 	return &schema.Resource{
 		Description: "Lookup an Organization in InfluxDB2.",
 		ReadContext: dataSourceOrganizationRead,
-		Schema: map[string]*schema.Schema{
-			"name": {
+		Schema: mergeSchemas(map[string]*schema.Schema{
+			"description": {
 				Type:        schema.TypeString,
-				Optional:    true,
-				Computed:    false,
-				Description: "Name of the Organization.",
+				Computed:    true,
+				Description: "The description of the Organization.",
 			},
 			"id": {
 				Type:        schema.TypeString,
@@ -28,13 +27,13 @@ func dataSourceOrganization() *schema.Resource {
 				Computed:    true,
 				Description: "ID of the Organization.",
 			},
-			// Computed outputs
-			"description": {
+			"name": {
 				Type:        schema.TypeString,
-				Computed:    true,
-				Description: "The description of the Organization.",
+				Required:    true,
+				Computed:    false,
+				Description: "Name of the Organization.",
 			},
-		},
+		}, createUpdatedSchema("Organization")),
 	}
 }
 
@@ -76,16 +75,31 @@ func dataSourceOrganizationRead(ctx context.Context, d *schema.ResourceData, met
 	if err != nil {
 		return nil
 	}
-	err = d.Set("name", org.Name)
-	if err != nil {
-		return nil
-	}
 	if org.Description != nil {
 		err := d.Set("description", *org.Description)
 		if err != nil {
 			return nil
 		}
 	}
-
+	err = d.Set("name", org.Name)
+	if err != nil {
+		return nil
+	}
+	err = d.Set("created_at", org.CreatedAt.Format("2006-01-02T15:04:05.000Z"))
+	if err != nil {
+		return nil
+	}
+	err = d.Set("updated_at", org.UpdatedAt.Format("2006-01-02T15:04:05.000Z"))
+	if err != nil {
+		return nil
+	}
+	err = d.Set("created_timestamp", org.CreatedAt.UnixNano()/1000000)
+	if err != nil {
+		return nil
+	}
+	err = d.Set("updated_timestamp", org.UpdatedAt.UnixNano()/1000000)
+	if err != nil {
+		return nil
+	}
 	return diags
 }

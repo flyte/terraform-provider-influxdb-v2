@@ -112,6 +112,15 @@ func resourceBucketRead(d *schema.ResourceData, meta interface{}) error {
 		}
 		rr = append(rr, tmp)
 	}
+	if len(result.RetentionRules) == 0 {
+		// If no retention rules, there's a default of 0 expiry
+		// but this isn't returned on the API
+		tmp := map[string]interface{}{
+			"every_seconds": 0,
+			"type":          "expire",
+		}
+		rr = append(rr, tmp)
+	}
 
 	err = d.Set("name", result.Name)
 	if err != nil {
@@ -181,7 +190,7 @@ func getRetentionRules(input interface{}) domain.RetentionRules {
 	for _, retentionRule := range retentionRulesSet {
 		rr, ok := retentionRule.(map[string]interface{})
 		if ok {
-			each := domain.RetentionRule{EverySeconds: rr["every_seconds"].(int)}
+			each := domain.RetentionRule{EverySeconds: int64(rr["every_seconds"].(int))}
 			result = append(result, each)
 		}
 	}

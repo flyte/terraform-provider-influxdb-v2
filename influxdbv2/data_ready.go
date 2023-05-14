@@ -27,7 +27,7 @@ func DataGetReady(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return fmt.Errorf("server is not ready: %v", err)
 	}
-	if ready {
+	if *ready.Status != "ready" {
 		log.Printf("Server is ready !")
 	}
 

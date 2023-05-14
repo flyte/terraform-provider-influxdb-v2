@@ -15,6 +15,12 @@ website/node_modules
 .vagrant/
 *.backup
 ./*.tfstate
+examples/**/**/.terraform/
+examples/**/**/*provider.tf
+examples/**/**/*.tfstate
+examples/**/**/.terraform.lock.hcl
+examples/**/**/.terraformrc
+examples/.terraformrc
 .terraform/
 *.log
 *.bak
@@ -25,6 +31,7 @@ website/node_modules
 *.test
 *.iml
 *.env
+.envrc
 website/vendor
 .task/
 vendor/
@@ -34,3 +41,4 @@ vendor/
 
 # Keep windows files with windows line endings
 *.winfile eol=crlf
+!/examples/.terraformrc

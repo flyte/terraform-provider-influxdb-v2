@@ -13,6 +13,7 @@ func Provider() *schema.Provider {
 		DataSourcesMap: map[string]*schema.Resource{
 			"influxdb-v2_ready":        DataReady(),
 			"influxdb-v2_organization": dataSourceOrganization(),
+			"influxdb-v2_bucket":       dataSourceBucket(),
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"influxdb-v2_bucket":        ResourceBucket(),
